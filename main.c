@@ -82,3 +82,4 @@ int acsess(char *input, char *path)
 	strcat(path, input);
 	printf("%s", path);
 }
+
