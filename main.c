@@ -15,6 +15,7 @@ int main(void)
 	else
 		while (1)
 		{
+			write(STDOUT_FILENO, "$ ", 2);
 
 			args = malloc(sizeof(char *) * 50);
 
