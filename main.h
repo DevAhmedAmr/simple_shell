@@ -14,7 +14,6 @@ void free_3d_arr(char ***args);
 void print3d_arr(char ***threeD_arr);
 void printArgs(char **args);
 void non_interactive(char **cmd, char ***args);
-// void non_int(char **cmd, char ***args);
 void non_(char **cmd, char ***args);
 
 #endif

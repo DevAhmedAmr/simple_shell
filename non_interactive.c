@@ -1,6 +1,5 @@
 #include "main.h"
 void print_arg_non_int(char **args);
-void non_interactive(char **cmd, char ***args);
 // char ***tokenize_non_int(char **cmd, char ***args)
 // {
 // 	int i = 0;
