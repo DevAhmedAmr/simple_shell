@@ -3,38 +3,23 @@ void printEnvPath();
 void printArgs(char **args);
 int main(void)
 {
-	char *cmd = NULL, **args, ***threeD_arr = NULL, *token = NULL;
+	char *cmd = NULL, **args = NULL, ***threeD_arr = NULL, *token = NULL;
 	int interActive = isatty(STDIN_FILENO);
 	size_t i;
 
 	if (!interActive)
 	{
-		args = malloc(sizeof(char *) * 1);
-		threeD_arr = tokenize_non_int(&cmd, &args);
-		// print3d_arr(threeD_arr);
-		int x = 0;
-
-		while (args[x] != NULL)
-		{
-			printf("xx %s\n", args[x]);
-			x++;
-		}
-
+		non_int(&cmd, &args);
 		free(cmd);
-		free_double_arr(args);
-		free_3d_arr(threeD_arr);
 	}
 	else
 		while (1)
 		{
 
-			cmd = NULL;
 			args = malloc(sizeof(char *) * 50);
-			threeD_arr = NULL;
-			i = 0;
-			token = NULL;
 
 			tokenize_interactive_mode(&cmd, &args);
+
 			printArgs(args);
 
 			printEnvPath();

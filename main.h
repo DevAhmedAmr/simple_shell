@@ -13,4 +13,5 @@ char **tokenize_string(char *path, char *del);
 char ***tokenize_non_int(char **cmd, char ***args);
 void free_3d_arr(char ***args);
 void print3d_arr(char ***threeD_arr);
+void printArgs(char **args);
 #endif
