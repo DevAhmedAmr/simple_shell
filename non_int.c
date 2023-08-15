@@ -1,5 +1,6 @@
 #include "main.h"
 void print_arg_non_int(char **args);
+void non_interactive(char **cmd, char ***args);
 // char ***tokenize_non_int(char **cmd, char ***args)
 // {
 // 	int i = 0;
@@ -38,7 +39,7 @@ void print_arg_non_int(char **args);
 // 	return token_arr;
 // }
 
-void non_int(char **cmd, char ***args)
+void non_interactive(char **cmd, char ***args)
 {
 	size_t read;
 	size_t size;

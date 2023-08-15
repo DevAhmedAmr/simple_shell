@@ -9,13 +9,13 @@ int main(void)
 
 	if (!interActive)
 	{
-		non_int(&cmd, &args);
+		non_interactive(&cmd, &args);
 		free(cmd);
 	}
 	else
 		while (1)
 		{
-			write(STDOUT_FILENO, "$ ", 2);
+			write(STDIN_FILENO, "$ ", 2);
 
 			args = malloc(sizeof(char *) * 50);
 
@@ -75,4 +75,10 @@ void printArgs(char **args)
 	{
 		printf("argv :: %s\n", args[j]);
 	}
+}
+int acsess(char *input, char *path)
+{
+	strcat(path, "/");
+	strcat(path, input);
+	printf("%s", path);
 }
