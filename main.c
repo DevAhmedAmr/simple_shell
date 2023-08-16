@@ -92,13 +92,14 @@ void printArgs(char **args)
 int append_to_path(char **path, char *input)
 {
 	int input_len = strlen(input), path_len = strlen(*path);
-	char *tmp = realloc(*path, sizeof(char) * (path_len + input_len + 3)); // +2 for the slash and null terminator
+
+	/* +2 for the slash and null terminator*/
+	char *tmp = realloc(*path, sizeof(char) * (path_len + input_len + 2));
 
 	if (tmp == NULL)
 	{
 		fprintf(stderr, "Memory reallocation failed.\n");
-
-		return -1; // return NULL on failure
+		return -1; // return error on failure
 	}
 
 	*path = tmp;
@@ -108,6 +109,6 @@ int append_to_path(char **path, char *input)
 
 	printf("%s\n\n", *path);
 
-	// return the newly allocated path
+	// return success
 	return 0;
 }
