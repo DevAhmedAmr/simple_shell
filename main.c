@@ -1,7 +1,7 @@
 #include "main.h"
-void printEnvPath();
+int printEnvPath(char *input);
 void printArgs(char **args);
-int acsess2(char *input, char *path);
+int append_to_path(char **path, char *input);
 int main(void)
 {
 	char *cmd = NULL, **args = NULL, ***threeD_arr = NULL, *token = NULL;
@@ -24,7 +24,8 @@ int main(void)
 
 			printArgs(args);
 
-			printEnvPath();
+			if (args[0] != NULL)
+				printEnvPath(args[0]);
 
 			/*free mem*/
 
@@ -51,24 +52,34 @@ void print3d_arr(char ***threeD_arr)
 	}
 }
 
-void printEnvPath()
+int printEnvPath(char *input)
 {
-	int i;
-	printf("%s\n", _getEnv("PATH="));
-
+	int i = 0;
 	char *path = _getEnv("PATH=");
-	char *pathCpy = strdup(path);
+	char *pathCpy;
+	if (path == NULL)
+		return -1;
+
+	pathCpy = strdup(path);
 
 	char **ListOFpaths = tokenize_string(pathCpy, ":=");
-	i = 0;
 
 	while (ListOFpaths[i] != NULL)
 	{
-		acsess2(ListOFpaths[i], "ls");
+		if (append_to_path(&ListOFpaths[i], input) == -1)
+		{
+			free_double_arr(ListOFpaths);
+			free(pathCpy);
+			return -1;
+		}
+
 		i++;
 	}
+
 	free_double_arr(ListOFpaths);
 	free(pathCpy);
+
+	return 0;
 }
 void printArgs(char **args)
 {
@@ -78,23 +89,24 @@ void printArgs(char **args)
 	}
 }
 
-int acsess2(char *input, char *path)
+int append_to_path(char **path, char *input)
 {
-	int input_len = strlen(input), path_len = strlen(path);
-	char *tmp = realloc(path, sizeof(char) * (path_len + input_len + 3)); // +2 for the slash and null terminator
+	int input_len = strlen(input), path_len = strlen(*path);
+	char *tmp = realloc(*path, sizeof(char) * (path_len + input_len + 3)); // +2 for the slash and null terminator
 
 	if (tmp == NULL)
 	{
 		fprintf(stderr, "Memory reallocation failed.\n");
+
 		return -1; // return NULL on failure
 	}
 
-	path = tmp;
+	*path = tmp;
 
-	strcat(path, "/");
-	strcat(path, input);
+	strcat(*path, "/");
+	strcat(*path, input);
 
-	printf("\n\n%s\n\n", path);
+	printf("%s\n\n", *path);
 
 	// return the newly allocated path
 	return 0;
