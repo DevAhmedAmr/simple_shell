@@ -1,10 +1,13 @@
 #include "main.h"
 
-void tokenize_interactive_mode(char **cmd, char ***args)
+int interactive_mode(char **cmd, char ***args)
 {
 	size_t size = 0;
 
 	int read = getline(cmd, &size, stdin);
+
+	if (read == -1)
+		return -1;
 
 	if (!strcmp(*cmd, "exit\n"))
 	{
@@ -16,4 +19,6 @@ void tokenize_interactive_mode(char **cmd, char ***args)
 	/*free the old args value before reassigning it*/
 	free(*args);
 	*args = tokenize_string(*cmd, " \n");
+
+	return 0;
 }

@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 extern char **environ;
-void tokenize_interactive_mode(char **cmd, char ***args);
+int interactive_mode(char **cmd, char ***args);
 char *_getEnv(char *path);
 void free_double_arr(char **args);
 char **tokenize_string(char *path, char *del);

@@ -1,5 +1,5 @@
 #include "main.h"
-int printEnvPath(char *input);
+int check_is_executable_in_paths(char *input);
 void printArgs(char **args);
 int append_to_path(char **path, char *input);
 int main(void)
@@ -20,12 +20,16 @@ int main(void)
 
 			args = malloc(sizeof(char *) * 50);
 
-			tokenize_interactive_mode(&cmd, &args);
+			if (interactive_mode(&cmd, &args) == EOF)
+			{
+				write(STDIN_FILENO, "\n", 1);
+				exit(127);
+			}
 
-			printArgs(args);
+			// printArgs(args);
 
 			if (args[0] != NULL)
-				printEnvPath(args[0]);
+				check_is_executable_in_paths(args[0]);
 
 			/*free mem*/
 
@@ -52,34 +56,47 @@ void print3d_arr(char ***threeD_arr)
 	}
 }
 
-int printEnvPath(char *input)
+int check_is_executable_in_paths(char *input)
 {
-	int i = 0;
+	int i = 0, is_executable;
 	char *path = _getEnv("PATH=");
-	char *pathCpy;
+	char *pathCpy, **pathsArray;
+
 	if (path == NULL)
+	{
+		fprintf(stderr, "path is not found");
 		return -1;
+	}
 
 	pathCpy = strdup(path);
 
-	char **ListOFpaths = tokenize_string(pathCpy, ":=");
+	pathsArray = tokenize_string(pathCpy, ":=");
 
-	while (ListOFpaths[i] != NULL)
+	while (pathsArray[i] != NULL)
 	{
-		if (append_to_path(&ListOFpaths[i], input) == -1)
+		if (append_to_path(&pathsArray[i], input) == -1)
 		{
-			free_double_arr(ListOFpaths);
+			fprintf(stderr, "Memory allocation failed");
+			free_double_arr(pathsArray);
 			free(pathCpy);
 			return -1;
+		}
+		if ((is_executable = access(pathsArray[i], X_OK)) == 0)
+		{
+			printf("%s\n\n", pathsArray[i]);
+			break;
 		}
 
 		i++;
 	}
 
-	free_double_arr(ListOFpaths);
+	free_double_arr(pathsArray);
 	free(pathCpy);
 
-	return 0;
+	if (is_executable)
+		fprintf(stderr, "Executable file '%s' not found in any PATH\n", input);
+
+	return is_executable;
 }
 void printArgs(char **args)
 {
@@ -107,8 +124,14 @@ int append_to_path(char **path, char *input)
 	strcat(*path, "/");
 	strcat(*path, input);
 
-	printf("%s\n\n", *path);
-
 	// return success
 	return 0;
 }
+// int forkk(char *input, char **args)
+// {
+// 	pid_t pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		execve()
+// 	}
+// }

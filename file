@@ -1,8 +1,5 @@
-hello world
-welcome 
-
-to my simple shell
-
+ls-a
+ls
 /bin/ls -l
 ls -l
 ls -a
