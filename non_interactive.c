@@ -49,7 +49,9 @@ void non_interactive(char **cmd, char ***args)
 
 		*args = tokenize_string(*cmd, " \n");
 
-		print_arg_non_int(*args);
+		if (args[0] != NULL)
+			tryExecuteCommand((*args)[0], *args);
+
 		free_double_arr(*args);
 		i++;
 	}
