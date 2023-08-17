@@ -1,0 +1,16 @@
+ls -la
+ls -l
+env
+whoami
+exit
+line11{
+gitlinr  ls -la
+strtik
+ls
+-la
+arr2d = {"ls", "-la" , NULL }
+excute
+arr2d [0] => excute
+arr2d [1] => excute
+arr2d [1] => NULL
+}

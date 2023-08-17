@@ -1,0 +1,13 @@
+/*
+ *cmd1;
+
+	cmd1 = malloc(cmdLn *  sizeof(char ));
+	if (!cmd1)
+		{
+			perror("tokenize.c:15 failed to Allocat -- cmd");
+			free(cmd);
+			return (-1);
+
+		}
+		strcpy(cmd1, cmd);
+		*/
