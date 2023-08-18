@@ -140,14 +140,14 @@ int append_to_path(char **path, char *input)
 int tryExecuteCommand(char *input, char **args)
 {
 	char *exc_path;
-	int execve_status = 2;
+	int execve_status = 0;
 
 	if (input == NULL)
 		return -1;
 
 	if ((exc_path = check_is_executable_in_paths(input)) != NULL)
 	{
-		ExecuteCommand(exc_path, args);
+		execve_status = ExecuteCommand(exc_path, args);
 		free(exc_path);
 	}
 	return execve_status;
