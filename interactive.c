@@ -1,5 +1,4 @@
 #include "main.h"
-
 int interactive_mode(char **cmd, char ***args)
 {
 	size_t size = 0;

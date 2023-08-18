@@ -1,10 +1,8 @@
 #include "main.h"
-
 int main(void)
 {
-	char *cmd = NULL, **args = NULL, ***threeD_arr = NULL, *token = NULL;
+	char *cmd = NULL, **args = NULL;
 	int interActive = isatty(STDIN_FILENO);
-	size_t i;
 
 	if (!interActive)
 	{
@@ -24,8 +22,6 @@ int main(void)
 				exit(127);
 			}
 
-			// printArgs(args);
-
 			if (args[0] != NULL)
 				tryExecuteCommand(args[0], args);
 
@@ -34,15 +30,19 @@ int main(void)
 			free(cmd);
 			free_double_arr(args);
 		}
+	return 0;
 }
 
 void print3d_arr(char ***threeD_arr)
 {
-	for (size_t i = 0; threeD_arr[i] != NULL; i++)
+	size_t i;
+
+	for (i = 0; threeD_arr[i] != NULL; i++)
 	{
 		char **token = threeD_arr[i];
+		size_t j;
 
-		for (size_t j = 0; token[j] != NULL; j++)
+		for (j = 0; token[j] != NULL; j++)
 		{
 			printf(" %s", token[j]);
 
@@ -59,13 +59,6 @@ char *check_is_executable_in_paths(char *input)
 	int i = 0, is_executable;
 	char *path = _getEnv("PATH=");
 	char *pathCpy, **pathsArray;
-	int input_is_path = input[0];
-
-	if (path == NULL)
-	{
-		perror(path);
-		return NULL;
-	}
 
 	if ((access(input, X_OK)) == 0)
 	{
@@ -73,9 +66,15 @@ char *check_is_executable_in_paths(char *input)
 		return pathCpy;
 	}
 
+	if (path == NULL)
+	{
+		perror(path);
+		/* exit(127);*/
+		return NULL;
+	}
+
 	pathCpy = strdup(path);
 	pathsArray = tokenize_string(pathCpy, ":=");
-	// printf("input : %s '%c'\n", input, input[0]);
 
 	while (pathsArray[i] != NULL)
 	{
@@ -108,7 +107,8 @@ char *check_is_executable_in_paths(char *input)
 }
 void printArgs(char **args)
 {
-	for (size_t j = 0; args[j] != NULL; j++)
+	size_t j;
+	for (j = 0; args[j] != NULL; j++)
 	{
 		printf("argv :: %s\n", args[j]);
 	}
@@ -125,7 +125,7 @@ int append_to_path(char **path, char *input)
 	if (tmp == NULL)
 	{
 		fprintf(stderr, "Memory reallocation failed.\n");
-		return -1; // return error on failure
+		return -1;
 	}
 
 	*path = tmp;
@@ -140,6 +140,7 @@ int append_to_path(char **path, char *input)
 int tryExecuteCommand(char *input, char **args)
 {
 	char *exc_path;
+	int execve_status = 2;
 
 	if (input == NULL)
 		return -1;
@@ -149,7 +150,7 @@ int tryExecuteCommand(char *input, char **args)
 		ExecuteCommand(exc_path, args);
 		free(exc_path);
 	}
-	return 0;
+	return execve_status;
 }
 int ExecuteCommand(char *input, char **args)
 {
@@ -172,23 +173,17 @@ int ExecuteCommand(char *input, char **args)
 	{
 		/*parent pros*/
 		int status;
-		int exit_status;
 
 		waitpid(pid, &status, 0);
+
 		if (WIFEXITED(status))
 		{
 			int exit_status = WEXITSTATUS(status);
 
-			if (exit_status != 0)
-				printf("Command did not exit normally\n");
-
 			return exit_status;
 		}
 		else
-		{
-			printf("Command did not exit normally\n");
 			return -1;
-		}
 	}
 	return 0;
 }
