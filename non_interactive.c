@@ -1,16 +1,16 @@
 #include "main.h"
 void print_arg_non_int(char **args);
-int non_interactive(char **cmd, char ***args)
+int non_interactive(char **cmd, char ***args, char *app_name)
 {
 	int read;
 	size_t size;
-	int i = 0, execve_status;
+	int i = 1, status = 0;
 
 	while ((read = getline(cmd, &size, stdin)) != -1)
 	{
 		if (!strcmp(*cmd, "exit\n") || !strcmp(*cmd, "exit"))
 		{
-			if (execve_status == 2)
+			if (status == 2)
 				exit(2);
 
 			exit(0);
@@ -19,13 +19,13 @@ int non_interactive(char **cmd, char ***args)
 		*args = tokenize_string(*cmd, " \n");
 
 		if (args[0] != NULL)
-			execve_status = tryExecuteCommand((*args)[0], *args);
+			status = tryExecuteCommand((*args)[0], *args, i, app_name);
 
 		free_double_arr(*args);
 
 		i++;
 	}
-	return execve_status;
+	return status;
 }
 void print_arg_non_int(char **args)
 {

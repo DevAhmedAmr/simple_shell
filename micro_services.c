@@ -5,7 +5,7 @@ char *_getEnv(char *env)
 
 	while (*s != NULL)
 	{
-		if (strncmp(*s, env, 4) == 0)
+		if (strncmp(*s, env, 5) == 0)
 			return *s;
 
 		s++;

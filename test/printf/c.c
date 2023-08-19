@@ -1,5 +1,5 @@
 #include "../main.h"
-int printc()
+int main()
 {
-	printf("cccccccc\n");
+	printf("%f", 8 / 0);
 }

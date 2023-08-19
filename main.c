@@ -1,17 +1,20 @@
 #include "main.h"
-int main(void)
+
+int main(int argc, char **argv)
 {
 	char *cmd = NULL, **args = NULL;
-	int interActive = isatty(STDIN_FILENO);
-
+	int interActive = isatty(STDIN_FILENO), status = 0, i = 1;
+	(void)argc;
 	if (!interActive)
 	{
-		non_interactive(&cmd, &args);
+		status = non_interactive(&cmd, &args, argv[0]);
 		free(cmd);
+		return status;
 	}
 	else
 		while (1)
 		{
+
 			write(STDIN_FILENO, "$ ", 2);
 
 			args = malloc(sizeof(char *) * 50);
@@ -19,18 +22,19 @@ int main(void)
 			if (interactive_mode(&cmd, &args) == EOF)
 			{
 				write(STDIN_FILENO, "\n", 1);
-				exit(127);
+				exit(status);
 			}
 
 			if (args[0] != NULL)
-				tryExecuteCommand(args[0], args);
+				status = tryExecuteCommand(args[0], args, i, argv[0]);
 
 			/*free mem*/
 
 			free(cmd);
 			free_double_arr(args);
+			i++;
 		}
-	return 0;
+	return status;
 }
 
 void print3d_arr(char ***threeD_arr)
@@ -53,14 +57,17 @@ void print3d_arr(char ***threeD_arr)
 		putchar('\n');
 	}
 }
+/*1 - changed path to path1 and input / bin / ls success */
+/*2 - removed path input ls fail*/
 
-char *check_is_executable_in_paths(char *input)
+char *check_is_executable_in_paths(char *input, int command_count, char *app_name)
 {
 	int i = 0, is_executable;
+	int is_full_path = (input[0] == '.' || input[0] == '/');
 	char *path = _getEnv("PATH=");
-	char *pathCpy, **pathsArray;
+	char *pathCpy, **paths;
 
-	if ((access(input, X_OK)) == 0)
+	if (is_full_path && access(input, X_OK) == 0)
 	{
 		pathCpy = strdup(input);
 		return pathCpy;
@@ -68,40 +75,38 @@ char *check_is_executable_in_paths(char *input)
 
 	if (path == NULL)
 	{
-		perror(path);
-		/* exit(127);*/
+		fprintf(stderr, "%s: %i: %s: not found\n", app_name, command_count, input);
 		return NULL;
 	}
 
 	pathCpy = strdup(path);
-	pathsArray = tokenize_string(pathCpy, ":=");
+	paths = tokenize_string(pathCpy, ":=");
 
-	while (pathsArray[i] != NULL)
+	while (paths[i] != NULL)
 	{
-
-		if (append_to_path(&pathsArray[i], input) == -1)
+		if (append_to_path(&paths[i], input) == -1)
 		{
 			fprintf(stderr, "Memory allocation failed");
-			free_double_arr(pathsArray);
+			free_double_arr(paths);
 			free(pathCpy);
 			return NULL;
 		}
 
-		if ((is_executable = access(pathsArray[i], X_OK)) == 0)
+		if ((is_executable = access(paths[i], X_OK)) == 0)
 		{
-			char *found_path = strdup(pathsArray[i]);
-			free_double_arr(pathsArray);
+			char *found_path = strdup(paths[i]);
+			free_double_arr(paths);
 			free(pathCpy);
 			return found_path;
 		}
 		i++;
 	}
 
-	free_double_arr(pathsArray);
+	free_double_arr(paths);
 	free(pathCpy);
 
 	if (is_executable != 0)
-		perror(input);
+		fprintf(stderr, "%s: %i: %s: not found\n", app_name, command_count, input);
 
 	return NULL;
 }
@@ -137,19 +142,22 @@ int append_to_path(char **path, char *input)
 	return 0;
 }
 
-int tryExecuteCommand(char *input, char **args)
+int tryExecuteCommand(char *input, char **args, int command_count, char *app_name)
 {
 	char *exc_path;
 	int execve_status = 0;
 
 	if (input == NULL)
-		return -1;
+		return 0;
 
-	if ((exc_path = check_is_executable_in_paths(input)) != NULL)
+	if ((exc_path = check_is_executable_in_paths(input, command_count, app_name)) != NULL)
 	{
 		execve_status = ExecuteCommand(exc_path, args);
 		free(exc_path);
 	}
+	else
+		return (127);
+
 	return execve_status;
 }
 int ExecuteCommand(char *input, char **args)
@@ -165,9 +173,7 @@ int ExecuteCommand(char *input, char **args)
 	if (pid == 0)
 	{
 		if (execve(input, args, environ) == -1)
-		{
 			exit(EXIT_FAILURE);
-		}
 	}
 	else
 	{
