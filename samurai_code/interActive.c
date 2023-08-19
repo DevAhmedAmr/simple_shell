@@ -26,8 +26,9 @@ int inter_Active(char **argv, char **cmd)
 	free(*argv);
 	argv = tokenize(*cmd, " \n");
 	//  prin_argv( *argv);
-	for (size_t i = 0; argv[i]; i++ )
-		 executeCommand(argv[i], argv);
+
+
+ executeCommand(*cmd, argv);
 
 
 

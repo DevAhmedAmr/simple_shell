@@ -36,6 +36,7 @@ char  **tokenize(char *cmd, char*  delim)
 		}
 
 		Tokens[TksNum] = NULL;
+
 			return (Tokens);
 }
 

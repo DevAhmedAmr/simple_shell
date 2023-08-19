@@ -1,0 +1,10 @@
+for i in $(ls)
+do
+    if [[ $i == checker.bash ]]; then
+        continue
+    elif [[ $i == *.bash ]]; then
+        echo -e "\n running script $i \n"
+        ./checker.bash ./hsh "./$i"
+    fi
+done
+

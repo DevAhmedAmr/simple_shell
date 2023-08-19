@@ -1,7 +1,10 @@
 #include "main.h"
 
 extern char **environ;
-
+/*
+search
+acess();
+*/
 void printEnv()
 {
     for (size_t i = 0; environ[i] != NULL; i++)
@@ -13,11 +16,20 @@ void printEnv()
 int executeCommand(char *command, char **argv)
 
 {
+    // printf("cmmmand => %s\n",command);
+    // printf("%s",command)
 
-	printf("-command: %s  -argv [0]: %s [1]:%s \n",command,argv[0], argv[1]);
+	// for (int i = 0; argv[i]; i++)
+		// printf("argv[%s]\n", argv[i]);
+
     pid_t pid;
     int status;
-    pid = fork();
+    // pid = fork();
+    char *x[] = {"-la",">","tst.txt"};
+
+
+    /*
+execve("bin/ls", x, NULL) ;
 
     if (pid == 0)
     {
@@ -32,4 +44,5 @@ int executeCommand(char *command, char **argv)
     {
         waitpid(pid, &status, 0);
     }
+    */
 }

@@ -9,10 +9,12 @@ int main(void)
 	char **argv = NULL, *cmd = NULL;
 
 
+
 	/*isatty => 0 in case of interactive mode */
 	if (!interActicve)
 		{
-			printf("File interActicve = %d\n",interActicve);
+		nonInterActive(cmd, argv);
+		free(cmd);
 
 		}
 
@@ -35,10 +37,20 @@ int main(void)
 			write(STDIN_FILENO, " \n", 2);
 			exit(127);
 		}
+
+
 		}
+
 		free(cmd);
 		free_argv(argv);
 	}
 
 	return (0);
+}
+void printargv(char **argv)
+{
+	for (size_t j = 0; argv[j] != NULL; j++)
+	{
+		printf("%s\n", argv[j]);
+	}
 }
