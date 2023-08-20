@@ -6,14 +6,18 @@ int main(void)
 {
 
 	int interActicve = isatty(STDIN_FILENO);
-	char **argv = NULL, *cmd = NULL;
+	char** argv = NULL, **PathArr = TokenEnvfPath(), * cmd = " \n";
+
 
 
 
 	/*isatty => 0 in case of interactive mode */
 	if (!interActicve)
 		{
-		nonInterActive(cmd, argv);
+		argv = malloc(sizeof(char *) * 50);
+		cmd = malloc(sizeof(char ) * 50);
+
+		non_Inter_Active(cmd, argv);
 		free(cmd);
 
 		}
@@ -22,6 +26,8 @@ int main(void)
 	{
 		while(1)
 		{
+			if (!cmd)
+				cmd = " \n";
 		write(STDIN_FILENO, "$ ", 2);
 
 		argv = malloc(sizeof(char *) * 50);
@@ -30,7 +36,7 @@ int main(void)
 				perror("Main.c:29 Allocate Falier");
 				return (0);
 			}
-		int exst = inter_Active(argv, &cmd);
+		int exst = inter_Active(&cmd, PathArr, argv);
 
 		if (exst == -1)
 		{
@@ -42,7 +48,7 @@ int main(void)
 		}
 
 		free(cmd);
-		free_argv(argv);
+		freeDoubleArray(argv);
 	}
 
 	return (0);
