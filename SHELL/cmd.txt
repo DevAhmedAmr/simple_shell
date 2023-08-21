@@ -1,0 +1,5 @@
+whoami
+ls -la
+ls -lta
+echo "DFONE"
+

@@ -1,0 +1,20 @@
+#include "main.h"
+
+
+void handelFile0(void)
+{
+	char *input = NULL;
+
+	size_t size = 0 ;
+	size_t  x;
+
+	printf("$ ");
+
+	while ( (x = getline(&input, &size, stdin)) != -1)
+	{
+		input[x -1] = '\0';
+		printf("%s\n", input);
+
+	}
+	free(input);
+}
