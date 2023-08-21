@@ -22,6 +22,8 @@ int main(int argc, char **argv)
 			if (interactive_mode(&cmd, &args) == EOF)
 			{
 				write(STDIN_FILENO, "\n", 1);
+				free(args);
+				free(cmd);
 				exit(status);
 			}
 
