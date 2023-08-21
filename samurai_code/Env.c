@@ -1,4 +1,5 @@
 #include "main.h"
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -23,6 +24,7 @@ return (NULL);
  */
 char **TokenEnvfPath()
 {
+	size_t i, j;
 	/* copy the Enviroment path  antoher string so we doont tokenize the system path*/
 	char* envPath = strdup(SearchIntEnv("PATH="));
 	if (!envPath )
@@ -33,8 +35,15 @@ char **TokenEnvfPath()
 	}
 
 	/* inctrement the string pointer which store the  path copy py 5 (0 -> 4)  to strart point the charcter after "PATH="   */
-	envPath += 4;
-	char **PathArr= tokenize(envPath, ":=");
+	envPath += 5;
+
+
+	//  printf("\n \033[1;31m-PATH BEFFORE\033[0m\n %s\n",envPath);
+
+	char **PathArr= tokenize(envPath, ":");
+
+	// printDblArr(PathArr, 0);
+
 
 	return (PathArr);
 }

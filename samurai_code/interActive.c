@@ -1,40 +1,60 @@
 #include "main.h"
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 int inter_Active(char **cmd, char **PathArr, char **argv)
 {
 
-  size_t cmdLen = 0;
+	size_t cmdLen = 0;
 
-  if (!*cmd)
-    *cmd = " \n";
+	if (!*cmd)
+	 *cmd = " \n";
 
-  int getLin = getline(cmd, &cmdLen, stdin);
-  if (getLin == -1)
-    return (getLin);
-
-  if (strcmp(*cmd, "exit\n") == 0) {
-    printf("interAct exit.c:23\n");
-
+	int getLin = getline(cmd, &cmdLen, stdin);
+	if (getLin == -1)
+	{
     free(*cmd);
-    free(*argv);
-    exit(0);
-  }
-  free(*argv);
-  argv = tokenize(*cmd, " \n");
-  //  prin_argv( *argv);
+	 if (argv)
+			freeDoubleArray(argv);
+	 if (PathArr)
+			freeDoubleArray(PathArr);
+	 // free(*argv);
+	  return (getLin);
+	}
 
-  //  executeCommand(*cmd, argv);
+	if (strcmp(*cmd, "exit\n") == 0) {
+	 // printf("interAct exit.c:23\n");
+  if (cmd)
+	  free(*cmd);
+	if (argv)
+			freeDoubleArray(argv);
+	if (PathArr)
+			freeDoubleArray(PathArr);
+	 // free(*argv);
+	 exit(0);
+	}
+	// free(*argv);
+	argv = tokenize(*cmd, " \n");
 
-  if (!strcmp(*cmd, "env")) {
+
+
+// printf("hay hay hay Path Executable Test %s\n\n\n\n",isExecuteable(PathArr ,argv));
+		EXEECUTE(PathArr, argv);
+
+	// printf("\n\n\n interactive.c:27 argv[0]%s \n\n\n ",argv[0]);
+	//	prin_argv( *argv);
+
+	//	executeCommand(*cmd, argv);
+/*
+	if (!strcmp(*cmd, "env")) {
 	printf("env :: ");
 	if (PathArr && argv)
 	{
-    	// TokenEnvfPath(PathArr);
-    	printDblArr(PathArr,0);
-    	freeDoubleArray(PathArr);
+	 	// TokenEnvfPath(PathArr);
+	 	printDblArr(PathArr,0);
+	 	freeDoubleArray(PathArr);
 	}
 	else
 	{
@@ -50,8 +70,9 @@ int inter_Active(char **cmd, char **PathArr, char **argv)
 
 	}
 
-  }
-  executeCommand(*cmd, argv);
+	}
+	*/
+	// executeCommand(*cmd, argv);
 
-  return (0);
+	return (0);
 }

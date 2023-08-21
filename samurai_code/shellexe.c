@@ -11,7 +11,7 @@ acess();
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-
+/*
 int Execvp(const char *file, char *const argv[])
 {
     char *path = SearchIntEnv("PATH=");
@@ -56,8 +56,8 @@ int Execvp(const char *file, char *const argv[])
     perror("execv");
     return -1;
 }
-
-int executeCommand(char *command, char **argv)
+*/
+int executeCommand(char *PATH, char **argv)
 {
 	// if (!strcmp(command , "env"))
 	// 	 return(0);
@@ -68,8 +68,22 @@ int executeCommand(char *command, char **argv)
 
 	if (pid == 0) {
 		// Child process
-		if (Execvp(command, argv) == -1) {
-			printf("Command \" %s \" not found \n",command);
+		if (execv(PATH, argv) == -1)
+		{
+			// printf("Command \" %s \" not found \n",argv[0]);
+			if(PATH != NULL)
+			{
+				free(PATH);
+				printf("shellexe.c:113 free PATH %p\n ",PATH);
+
+			}
+			if(argv != NULL)
+			{
+					freeDoubleArray(argv);
+					printf("shellexe.c:119 free argv %p\n ",argv);
+
+			}
+
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -79,10 +93,58 @@ int executeCommand(char *command, char **argv)
 	} else {
 		// Fork failed
 		perror("sorry something went rong :)");
+		if(PATH != NULL)
+			{
+				free(PATH);
+				printf("shellexe.c:113 free PATH %p\n ",PATH);
+
+			}
+			if(argv != NULL)
+			{
+					freeDoubleArray(argv);
+					printf("shellexe.c:119 free argv %p\n ",argv);
+
+			}
+
+
 		exit(EXIT_FAILURE);
 	}
 
 	return 0;
+}
+
+void EXEECUTE(char **PathArr, char **argv)
+{
+	int exeSign;
+	char *PATH = isExecuteable(PathArr, argv);
+	if (PATH)
+		exeSign = executeCommand(PATH, argv);
+
+
+	/* MM*/
+/*
+	if(PATH != NULL)
+	{
+		free(PATH);
+		printf("shellexe.c:113 free PATH %p\n ",PATH);
+
+	}
+	if(argv != NULL)
+		{
+			freeDoubleArray(argv);
+			printf("shellexe.c:119 free argv %p\n ",argv);
+
+		}
+	if (PathArr != NULL)
+	{
+		freeDoubleArray(PathArr);
+		printf("shellexe.c:125 free PathArr %p\n ",PathArr);
+
+	}
+*/
+
+
+
 }
  /*
 int executeCommand(char *command, char **argv)

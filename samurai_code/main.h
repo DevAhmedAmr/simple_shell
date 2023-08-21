@@ -27,7 +27,7 @@ size_t printDblArr(char** DblArr, size_t NullTrm);
 
 
 int inter_Active( char **cmd, char **PathArr, char **argv);
-int non_Inter_Active(char *cmd, char **argv);
+int non_Inter_Active(char *cmd,char **PathArr,char **argv);
 
 char  **tokenize(char *cmd, char*  delim);
 char **TokenEnvfPath();
@@ -38,6 +38,11 @@ int executeCommand(char *command, char **argv);
 
 /*memory management*/
 size_t freeDoubleArray(char **argv);
+
+/* befExe*/
+char *isExecuteable(char **PathArr ,char **argv);
+char *mrgCmdAndPath(char *currPath ,char *cmdName);
+void EXEECUTE(char **PathArr, char **argv);
 
 
 

@@ -17,7 +17,7 @@ int main(void)
 		argv = malloc(sizeof(char *) * 50);
 		cmd = malloc(sizeof(char ) * 50);
 
-		non_Inter_Active(cmd, argv);
+		non_Inter_Active(cmd,PathArr, argv);
 		free(cmd);
 
 		}
@@ -30,17 +30,23 @@ int main(void)
 				cmd = " \n";
 		write(STDIN_FILENO, "$ ", 2);
 
-		argv = malloc(sizeof(char *) * 50);
-		if (!argv)
-			{
-				perror("Main.c:29 Allocate Falier");
-				return (0);
-			}
+		argv =NULL;
+		// if (!argv)
+		// 	{
+		// 		perror("Main.c:29 Allocate Falier");
+		// 		return (0);
+		// 	}
 		int exst = inter_Active(&cmd, PathArr, argv);
 
 		if (exst == -1)
 		{
 			write(STDIN_FILENO, " \n", 2);
+			if (cmd)
+				free(cmd);
+			if (argv)
+				freeDoubleArray(argv);
+			if (PathArr)
+				freeDoubleArray(PathArr);
 			exit(127);
 		}
 
@@ -53,6 +59,8 @@ int main(void)
 
 	return (0);
 }
+
+/*
 void printargv(char **argv)
 {
 	for (size_t j = 0; argv[j] != NULL; j++)
@@ -60,3 +68,4 @@ void printargv(char **argv)
 		printf("%s\n", argv[j]);
 	}
 }
+*/

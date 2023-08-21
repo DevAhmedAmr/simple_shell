@@ -1,9 +1,12 @@
 #include "main.h"
 #include <stddef.h>
 #include <stdio.h>
-int non_Inter_Active(char *cmd, char **argv)
+#include <stdlib.h>
+#include <string.h>
+int non_Inter_Active(char *cmd,char **PathArr,char **argv)
 {
-	size_t gtLin, cmdLn;
+	size_t cmdLn;
+	int gtLin;
 		// fprintf(stderr, "%s :  %s: not found\n", cmd ,argv[0]);
 		if (!cmd)
 			printf("cmd");
@@ -11,16 +14,27 @@ int non_Inter_Active(char *cmd, char **argv)
 			printf("argv");
 
 	int i = 0;
-	while ((cmdLn = getline(&cmd, &cmdLn,stdin) != -1))
+	cmd = malloc(50);
+	while (gtLin != -1)
 	{
-	argv =  tokenize(cmd," \n");
+		gtLin = getline(&cmd, &cmdLn,stdin);
+		argv =  tokenize(cmd," \n");
+		if (!argv || !cmd)
+			{
+				fprintf(stderr, "\033[1;31m_argv nonInterActive.c:20_\033[0m\n ");
 
-	 executeCommand(cmd,  argv);
-	printDblArr(argv, 0);
-	freeDoubleArray(argv);
-	i++;
+			}
+
+		EXEECUTE(PathArr, argv);
+
+		printDblArr(argv, 0);
+
+		freeDoubleArray(argv);
+		i++;
 
 	}
+
+	return (0);
 
 }
 

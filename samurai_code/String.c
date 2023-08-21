@@ -135,9 +135,9 @@ size_t printDblArr(char** DblArr, size_t NullTrm)
 		for (j = 0; DblArr[j]; j++)
 			if (DblArr[j] == NULL)
 				return (0);
-	printf("--- j[ %zu ] ----string.c:125\n",j);
+
 	for (i = 0; i < j; i++)
-		printf("[%zu] - %s: \n", i,DblArr[i]);
+		printf("[%zu] - %s  \n", i,DblArr[i]);
 
 	return (i);
 }
