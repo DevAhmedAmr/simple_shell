@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+extern char **environ;
+
+int main(void)
+{
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t nread;
+
+    while (1)
+    {
+        printf("$ ");
+        nread = getline(&line, &len, stdin);
+        if (nread == -1)
+        {
+            break;
+        }
+
+        line[nread - 1] = '\0';  // Remove the newline at the end
+
+        char *cmd = strtok(line, " ");
+        char *arg = strtok(NULL, " ");
+
+        if (strcmp(cmd, "exit") == 0)
+        {
+            break;
+        }
+        else if (strcmp(cmd, "env") == 0)
+        {
+            char **env = environ;
+            while (*env)
+            {
+                printf("%s\n", *env);
+                env++;
+            }
+        }
+        else
+        {
+            pid_t pid = fork();
+            if (pid == 0)
+            {
+                char *argv[] = {cmd, arg, NULL};
+                execve(cmd, argv, environ);
+                perror("execve");  // execve() only returns on error
+                exit(EXIT_FAILURE);
+            }
+            else if (pid < 0)
+            {
+                perror("fork");
+            }
+            else
+            {
+                int status;
+                waitpid(pid, &status, 0);
+            }
+        }
+    }
+
+    free(line);
+
+    return 0;
+}

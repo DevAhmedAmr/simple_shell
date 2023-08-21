@@ -16,7 +16,7 @@ char  **tokenize(char *cmd, char*  delim)
 
 		if (!Tokens)
 		{
-			free_argv(Tokens);
+			freeDoubleArray(Tokens);
 			perror("tokenaize.c:21 realloc");
 			return (NULL);
 		}
@@ -30,12 +30,13 @@ char  **tokenize(char *cmd, char*  delim)
 		Tokens = realloc(Tokens, sizeof(char *) * (TksNum + 1));
 		if (!Tokens)
 		{
-			free_argv(Tokens);
+			freeDoubleArray(Tokens);
 			perror("tokenaize.c:21 realloc");
 			return (NULL);
 		}
 
 		Tokens[TksNum] = NULL;
+
 			return (Tokens);
 }
 
