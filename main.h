@@ -12,13 +12,13 @@ void free_double_arr(char **args);
 char **tokenize_string(char *path, char *del);
 void free_3d_arr(char ***args);
 void print3d_arr(char ***threeD_arr);
-void printArgs(char **args);
+void print_2d_arr(char **args);
 int non_interactive(char **cmd, char ***args, char *app_name);
 void non_(char **cmd, char ***args);
 char *check_is_executable_in_paths(char *input, int command_count, char *app_name);
-void printArgs(char **args);
+void print_2d_arr(char **args);
 int append_to_path(char **path, char *input);
 int tryExecuteCommand(char *input, char **args, int command_count, char *app_name);
 int ExecuteCommand(char *input, char **args);
-
+int builtIns(char *cmd, char **args);
 #endif

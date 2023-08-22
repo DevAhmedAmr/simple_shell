@@ -27,6 +27,11 @@ int main(int argc, char **argv)
 				exit(status);
 			}
 
+			if (builtIns(cmd, args))
+			{
+				i++;
+				continue;
+			}
 			if (args[0] != NULL)
 				status = tryExecuteCommand(args[0], args, i, argv[0]);
 
@@ -37,6 +42,23 @@ int main(int argc, char **argv)
 			i++;
 		}
 	return status;
+}
+int builtIns(char *cmd, char **args)
+{
+	if (!strcmp(cmd, "exit\n"))
+	{
+		free(cmd);
+		free(args);
+		exit(0);
+	}
+	else if (!strcmp(cmd, "env\n"))
+	{
+		print_2d_arr(environ);
+		free(cmd);
+		free_double_arr(args);
+		return 1;
+	}
+	return 0;
 }
 
 void print3d_arr(char ***threeD_arr)
@@ -112,13 +134,12 @@ char *check_is_executable_in_paths(char *input, int command_count, char *app_nam
 
 	return NULL;
 }
-void printArgs(char **args)
+void print_2d_arr(char **args)
 {
 	size_t j;
+
 	for (j = 0; args[j] != NULL; j++)
-	{
-		printf("argv :: %s\n", args[j]);
-	}
+		printf("%s\n", args[j]);
 }
 
 int append_to_path(char **path, char *input)
