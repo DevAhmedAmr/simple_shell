@@ -10,11 +10,12 @@ int non_interactive(char **cmd, char ***args, char *app_name)
 	{
 		if (!strcmp(*cmd, "exit\n") || !strcmp(*cmd, "exit"))
 		{
-			if (status == 2)
-				exit(2);
+			/*if (status == 2)*/
+			/*exit(2);*/
 
 			exit(0);
 		}
+		builtIns(*cmd, *args);
 
 		*args = tokenize_string(*cmd, " \n");
 
