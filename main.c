@@ -5,10 +5,10 @@ int main(int argc, char **argv)
 	char *cmd = NULL, **args = NULL;
 	int interActive = isatty(STDIN_FILENO), status = 0, i = 1;
 	(void)argc;
+
 	if (!interActive)
 	{
 		status = non_interactive(&cmd, &args, argv[0]);
-
 		free(cmd);
 		return status;
 	}
@@ -28,11 +28,12 @@ int main(int argc, char **argv)
 				exit(status);
 			}
 
-			if (builtIns(cmd, args))
+			if (builtIns(cmd, args, status))
 			{
 				i++;
 				continue;
 			}
+
 			if (args[0] != NULL)
 				status = tryExecuteCommand(args[0], args, i, argv[0]);
 
@@ -44,13 +45,13 @@ int main(int argc, char **argv)
 		}
 	return status;
 }
-int builtIns(char *cmd, char **args)
+int builtIns(char *cmd, char **args, int status)
 {
-	if (!strcmp(cmd, "exit\n"))
+	if (!strcmp(cmd, "exit"))
 	{
 		free(cmd);
 		free(args);
-		exit(0);
+		exit(status);
 	}
 	else if (!strcmp(cmd, "env\n"))
 	{

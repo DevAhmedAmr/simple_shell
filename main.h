@@ -20,5 +20,6 @@ void print_2d_arr(char **args);
 int append_to_path(char **path, char *input);
 int tryExecuteCommand(char *input, char **args, int command_count, char *app_name);
 int ExecuteCommand(char *input, char **args);
-int builtIns(char *cmd, char **args);
+int builtIns(char *cmd, char **args, int status);
+
 #endif

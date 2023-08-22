@@ -8,12 +8,12 @@ int interactive_mode(char **cmd, char ***args)
 	if (read == -1)
 		return -1;
 
-	if (!strcmp(*cmd, "exit\n"))
-	{
-		free(*cmd);
-		free(*args);
-		exit(0);
-	}
+	/*if (!strcmp(*cmd, "exit\n"))*/
+	/*{*/
+	/*free(*cmd);*/
+	/*free(*args);*/
+	/*exit(0);*/
+	/*}*/
 
 	/*free the old args value before reassigning it*/
 	free(*args);
