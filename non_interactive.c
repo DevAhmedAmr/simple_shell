@@ -15,7 +15,14 @@ int non_interactive(char **cmd, char ***args, char *app_name)
 
 			exit(0);
 		}
-		builtIns(*cmd, *args);
+
+		if (!strcmp(*cmd, "env\n"))
+		{
+			print_2d_arr(environ);
+			free(*cmd);
+			free_double_arr(*args);
+			return 1;
+		}
 
 		*args = tokenize_string(*cmd, " \n");
 
