@@ -12,7 +12,7 @@ int non_interactive(char **cmd, char ***args, char *app_name)
 		{
 			/*if (status == 2)*/
 			/*exit(2);*/
-			exit(0);
+			exit(status);
 		}
 
 		if (!strcmp(*cmd, "env\n"))

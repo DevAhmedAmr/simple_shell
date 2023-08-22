@@ -24,7 +24,6 @@ int ExecuteCommand(char *input, char **args)
 		if (WIFEXITED(status))
 		{
 			int exit_status = WEXITSTATUS(status);
-
 			return exit_status;
 		}
 		else
