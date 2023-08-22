@@ -8,6 +8,7 @@ int main(int argc, char **argv)
 	if (!interActive)
 	{
 		status = non_interactive(&cmd, &args, argv[0]);
+
 		free(cmd);
 		return status;
 	}

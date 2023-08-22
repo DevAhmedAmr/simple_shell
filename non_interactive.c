@@ -12,16 +12,13 @@ int non_interactive(char **cmd, char ***args, char *app_name)
 		{
 			/*if (status == 2)*/
 			/*exit(2);*/
-
 			exit(0);
 		}
 
 		if (!strcmp(*cmd, "env\n"))
 		{
 			print_2d_arr(environ);
-			free(*cmd);
-			free_double_arr(*args);
-			return 1;
+			return -2;
 		}
 
 		*args = tokenize_string(*cmd, " \n");
