@@ -18,7 +18,7 @@ int non_interactive(char **cmd, char ***args, char *app_name)
 		if (!strcmp(*cmd, "env\n"))
 		{
 			print_2d_arr(environ);
-			return -2;
+			return 0;
 		}
 
 		*args = tokenize_string(*cmd, " \n");
