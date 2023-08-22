@@ -23,7 +23,7 @@ char *mrgCmdAndPath(char *currPath ,char *cmdName)
 	mergedPath =malloc( (strlen(cmdName) + strlen(currPath) ) * sizeof(char) );
 	if (!mergedPath)
 		{
-			fprintf(stderr, "mergedPath Allocation Failer.c:14 ");
+			fprintf(stderr, "mergedPath Allocation Failer.c %d",__LINE__);
 			return (NULL);
 		}
 	strcat(mergedPath, currPath);
@@ -33,7 +33,12 @@ char *mrgCmdAndPath(char *currPath ,char *cmdName)
 	if (access(mergedPath , X_OK)  == 0)
 			return (mergedPath);
 	else
-		return (0);
+		{
+			free(mergedPath);
+			mergedPath = NULL;
+			printf("%d_",__LINE__);
+
+		}
 
 	// printf("\n>>>>>>>mergedPath<<<<< %s \n",mergedPath);
 
@@ -50,7 +55,6 @@ char *isExecuteable(char **PathArr ,char **argv)
 				char *isPathExe = mrgCmdAndPath(PathArr[i], argv[0]);
 				if (isPathExe)
 					return (isPathExe);
-
 			}
 
 	return (0);

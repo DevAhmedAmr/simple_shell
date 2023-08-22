@@ -18,7 +18,20 @@ int main(void)
 		cmd = malloc(sizeof(char ) * 50);
 
 		non_Inter_Active(cmd,PathArr, argv);
-		free(cmd);
+			printf("main.c:25 non inter argv[0]=> %s ,cmd=> %s", argv[0], cmd);
+
+		if (cmd)
+		{
+			free(cmd);
+			printf("main.c:24 freed non inter  cmd");
+
+		}
+		if (argv)
+		{
+			freeDoubleArray(argv);
+			fprintf(stderr, "non inter main.c:30   line: %d\n", __LINE__);
+
+		}
 
 		}
 
@@ -41,12 +54,6 @@ int main(void)
 		if (exst == -1)
 		{
 			write(STDIN_FILENO, " \n", 2);
-			if (cmd)
-				free(cmd);
-			if (argv)
-				freeDoubleArray(argv);
-			if (PathArr)
-				freeDoubleArray(PathArr);
 			exit(127);
 		}
 

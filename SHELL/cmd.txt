@@ -1,6 +1,5 @@
 whoami
 ls -la
 ls -lta
-env
 echo "DFONE"
 

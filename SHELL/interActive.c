@@ -9,8 +9,7 @@ int inter_Active(char **cmd, char **PathArr, char **argv)
 
 	size_t cmdLen = 0;
 
-	if (!*cmd)
-	 *cmd = " \n";
+
 
 	int getLin = getline(cmd, &cmdLen, stdin);
 	if (getLin == -1)
@@ -36,8 +35,15 @@ int inter_Active(char **cmd, char **PathArr, char **argv)
 	 exit(0);
 	}
 	// free(*argv);
+
+
+
 	argv = tokenize(*cmd, " \n");
 
+	if (argv == NULL || argv[0] == NULL) {
+		// continue to the next iteration of the loop
+		return 0; // or continue; if you're in a loop
+	}
 
 
 // printf("hay hay hay Path Executable Test %s\n\n\n\n",isExecuteable(PathArr ,argv));

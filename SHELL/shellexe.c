@@ -59,8 +59,8 @@ int Execvp(const char *file, char *const argv[])
 */
 int executeCommand(char *PATH, char **argv)
 {
-	// if (!strcmp(command , "env"))
-	// 	 return(0);
+	/* if (!strcmp(command , "env"))
+	 	 return(0); */
 	pid_t pid;
 	int status;
 
@@ -70,43 +70,67 @@ int executeCommand(char *PATH, char **argv)
 		// Child process
 		if (execv(PATH, argv) == -1)
 		{
-			// printf("Command \" %s \" not found \n",argv[0]);
+			/* printf("Command \" %s \" not found \n",argv[0]);  */
+			/*
 			if(PATH != NULL)
 			{
 				free(PATH);
-				printf("shellexe.c:113 free PATH %p\n ",PATH);
+				fprintf(stderr, "free PATH line: %d\n", __LINE__);
+
 
 			}
 			if(argv != NULL)
 			{
 					freeDoubleArray(argv);
-					printf("shellexe.c:119 free argv %p\n ",argv);
+					fprintf(stderr, "free argv line: %d\n", __LINE__);
+
 
 			}
-
+				*/
 			exit(EXIT_FAILURE);
 		}
 	}
-	else if (pid > 0) {
-		// Parent process
+	else if (pid > 0)
+	{
+		/* frreing memory after child process are done */
 		waitpid(pid, &status, 0);
-	} else {
-		// Fork failed
-		perror("sorry something went rong :)");
-		if(PATH != NULL)
+
+
+			if(PATH != NULL)
 			{
 				free(PATH);
-				printf("shellexe.c:113 free PATH %p\n ",PATH);
+				fprintf(stderr, "free PATH line: %d\n", __LINE__);
+
 
 			}
 			if(argv != NULL)
 			{
 					freeDoubleArray(argv);
-					printf("shellexe.c:119 free argv %p\n ",argv);
+					fprintf(stderr, "free argv line: %d\n", __LINE__);
+
 
 			}
+	}
+	else
+	 {
+		/* Fork failed */
+
+		fprintf(stderr, "sorry something went rong :) line: %d\n", __LINE__);
+/* free mompry after fork failer */
+			if(PATH != NULL)
+			{
+				free(PATH);
+				fprintf(stderr, "free PATH line: %d\n", __LINE__);
 
 
+			}
+			if(argv != NULL)
+			{
+					freeDoubleArray(argv);
+					fprintf(stderr, "free argv line: %d\n", __LINE__);
+
+
+			}
 		exit(EXIT_FAILURE);
 	}
 
@@ -119,6 +143,9 @@ void EXEECUTE(char **PathArr, char **argv)
 	char *PATH = isExecuteable(PathArr, argv);
 	if (PATH)
 		exeSign = executeCommand(PATH, argv);
+	else
+			fprintf(stderr, " Command Not '%s'  Found\n",argv[0]);
+
 
 
 	/* MM*/
