@@ -13,3 +13,30 @@ char *_getEnv(char *env)
 
 	return NULL;
 }
+void print3d_arr(char ***threeD_arr)
+{
+	size_t i;
+
+	for (i = 0; threeD_arr[i] != NULL; i++)
+	{
+		char **token = threeD_arr[i];
+		size_t j;
+
+		for (j = 0; token[j] != NULL; j++)
+		{
+			printf(" %s", token[j]);
+
+			if (token[j + 1] != NULL)
+
+				putchar(',');
+		}
+		putchar('\n');
+	}
+}
+void print_2d_arr(char **args)
+{
+	size_t j;
+
+	for (j = 0; args[j] != NULL; j++)
+		printf("%s\n", args[j]);
+}
