@@ -20,7 +20,10 @@ int non_interactive(char **cmd, char ***args, char *app_name)
 		/*print_2d_arr(environ);*/
 		/*return 0;*/
 		/*}*/
-		builtIns(*cmd, *args, status);
+
+		if (!(status = builtIns(*cmd, *args, status)))
+			break;
+
 		*args = tokenize_string(*cmd, " \n");
 
 		if (args[0] != NULL)
