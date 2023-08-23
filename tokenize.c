@@ -13,7 +13,7 @@ char **tokenize_string(char *str, char *delim)
 		/* Check if memory allocation was successful*/
 		if (tokenList == NULL)
 		{
-			free_double_arr(tokenList);
+			free_double_arr(&tokenList);
 			return NULL;
 		}
 

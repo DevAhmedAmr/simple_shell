@@ -1,11 +1,19 @@
 #include "main.h"
-void free_double_arr(char **args)
+void free_double_arr(char ***args)
 {
 	int j;
-	for (j = 0; args[j] != NULL; j++)
-		free(args[j]);
 
-	free(args);
+	if (*args == NULL)
+		return;
+
+	for (j = 0; (*args)[j] != NULL; j++)
+	{
+		free((*args)[j]);
+		(*args)[j] = NULL;
+	}
+
+	free(*args);
+	*args = NULL;
 }
 
 void free_3d_arr(char ***args)

@@ -15,7 +15,7 @@ int non_interactive(char **cmd, char ***args, char *app_name)
 		/*	exit(status);*/
 		/*	}*/
 
-		if (!(status = builtIns(*cmd, *args, status)))
+		if ((status = builtIns(*cmd, *args, status)))
 			return 0;
 
 		*args = tokenize_string(*cmd, " \n");
@@ -23,7 +23,7 @@ int non_interactive(char **cmd, char ***args, char *app_name)
 		if (args[0] != NULL)
 			status = tryExecuteCommand((*args)[0], *args, i, app_name);
 
-		free_double_arr(*args);
+		free_double_arr(args);
 
 		i++;
 	}

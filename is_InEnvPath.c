@@ -22,7 +22,7 @@ char *is_executable_in_env_paths(char *input, int command_count, char *app_name)
 		if (append_to_path(&paths[i], input) == -1)
 		{
 			fprintf(stderr, "Memory allocation failed");
-			free_double_arr(paths);
+			free_double_arr(&paths);
 			free(pathCpy);
 			return NULL;
 		}
@@ -31,13 +31,13 @@ char *is_executable_in_env_paths(char *input, int command_count, char *app_name)
 		{
 			char *found_path = strdup(paths[i]);
 
-			free_double_arr(paths);
+			free_double_arr(&paths);
 			free(pathCpy);
 			return found_path;
 		}
 		i++;
 	}
-	free_double_arr(paths);
+	free_double_arr(&paths);
 	free(pathCpy);
 	if (is_executable != 0)
 		fprintf(stderr, "%s: %i: %s: not found\n", app_name, command_count, input);

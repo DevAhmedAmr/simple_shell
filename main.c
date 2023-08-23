@@ -5,7 +5,6 @@ int main(int argc, char **argv)
 	char *cmd = NULL, **args = NULL;
 	int interActive = isatty(STDIN_FILENO), status = 0, i = 1;
 	(void)argc;
-
 	if (!interActive)
 	{
 		status = non_interactive(&cmd, &args, argv[0]);
@@ -22,6 +21,7 @@ int main(int argc, char **argv)
 			if (interactive_mode(&cmd, &args) == EOF)
 			{
 				write(STDIN_FILENO, "\n", 1);
+
 				FREE_ARGS_AND_CMD;
 				exit(status);
 			}
@@ -44,10 +44,11 @@ int main(int argc, char **argv)
 
 int builtIns(char *cmd, char **args, int status)
 {
+
 	if (!strcmp(cmd, "exit") || !strcmp(cmd, "exit\n"))
 	{
 		free(cmd);
-		free_double_arr(args);
+		free_double_arr(&args);
 		exit(status);
 	}
 	else if (!strcmp(cmd, "env\n") || !strcmp(cmd, "env"))

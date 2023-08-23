@@ -1,4 +1,5 @@
 ls-a
+exit
 ls
 /bin/ls -l
 ls -l
