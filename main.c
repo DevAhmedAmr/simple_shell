@@ -17,19 +17,18 @@ int main(int argc, char **argv)
 		{
 
 			write(STDIN_FILENO, "$ ", 2);
-
 			args = malloc(sizeof(char *) * 50);
 
 			if (interactive_mode(&cmd, &args) == EOF)
 			{
 				write(STDIN_FILENO, "\n", 1);
-				free(args);
-				free(cmd);
+				FREE_ARGS_AND_CMD;
 				exit(status);
 			}
 
 			if (builtIns(cmd, args, status))
 			{
+				FREE_2D_ARGS_AND_CMD;
 				i++;
 				continue;
 			}
@@ -37,10 +36,7 @@ int main(int argc, char **argv)
 			if (args[0] != NULL)
 				status = tryExecuteCommand(args[0], args, i, argv[0]);
 
-			/*free mem*/
-
-			free(cmd);
-			free_double_arr(args);
+			FREE_2D_ARGS_AND_CMD;
 			i++;
 		}
 	return status;
@@ -57,8 +53,6 @@ int builtIns(char *cmd, char **args, int status)
 	else if (!strcmp(cmd, "env\n") || !strcmp(cmd, "env"))
 	{
 		print_2d_arr(environ);
-		free(cmd);
-		free_double_arr(args);
 		return 1;
 	}
 	return 0;

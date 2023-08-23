@@ -15,14 +15,8 @@ int non_interactive(char **cmd, char ***args, char *app_name)
 		/*	exit(status);*/
 		/*	}*/
 
-		if (!strcmp(*cmd, "env\n"))
-		{
-			print_2d_arr(environ);
+		if (!(status = builtIns(*cmd, *args, status)))
 			return 0;
-		}
-
-		/*if (!(status = builtIns(*cmd, *args, status)))*/
-		/*return 0;*/
 
 		*args = tokenize_string(*cmd, " \n");
 

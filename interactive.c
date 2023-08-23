@@ -6,7 +6,7 @@ int interactive_mode(char **cmd, char ***args)
 	int read = getline(cmd, &size, stdin);
 
 	if (read == -1)
-		return -1;
+		return EOF;
 
 	/*if (!strcmp(*cmd, "exit\n"))*/
 	/*{*/
