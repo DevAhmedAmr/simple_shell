@@ -45,6 +45,7 @@ int main(int argc, char **argv)
 		}
 	return status;
 }
+
 int builtIns(char *cmd, char **args, int status)
 {
 	if (!strcmp(cmd, "exit"))

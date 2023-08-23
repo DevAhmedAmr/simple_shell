@@ -8,19 +8,19 @@ int non_interactive(char **cmd, char ***args, char *app_name)
 
 	while ((read = getline(cmd, &size, stdin)) != -1)
 	{
-		if (!strcmp(*cmd, "exit\n") || !strcmp(*cmd, "exit"))
-		{
-			/*if (status == 2)*/
-			/*exit(2);*/
-			exit(status);
-		}
+		/*if (!strcmp(*cmd, "exit\n") || !strcmp(*cmd, "exit"))
+			/*{
+				/*if (status == 2)*/
+		/*exit(2);*/
+		/*	exit(status);*/
+		/*	}*/
 
-		if (!strcmp(*cmd, "env\n"))
-		{
-			print_2d_arr(environ);
-			return 0;
-		}
-
+		/*if (!strcmp(*cmd, "env\n"))*/
+		/*	{*/
+		/*print_2d_arr(environ);*/
+		/*return 0;*/
+		/*}*/
+		builtIns(*cmd, *args, status);
 		*args = tokenize_string(*cmd, " \n");
 
 		if (args[0] != NULL)
