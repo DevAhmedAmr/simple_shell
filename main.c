@@ -48,13 +48,13 @@ int main(int argc, char **argv)
 
 int builtIns(char *cmd, char **args, int status)
 {
-	if (!strcmp(cmd, "exit"))
+	if (!strcmp(cmd, "exit") || !strcmp(cmd, "exit\n"))
 	{
 		free(cmd);
 		free_double_arr(args);
 		exit(status);
 	}
-	else if (!strcmp(cmd, "env\n"))
+	else if (!strcmp(cmd, "env\n") || !strcmp(cmd, "env"))
 	{
 		print_2d_arr(environ);
 		free(cmd);
