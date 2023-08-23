@@ -50,7 +50,7 @@ int builtIns(char *cmd, char **args, int status)
 	if (!strcmp(cmd, "exit"))
 	{
 		free(cmd);
-		free(args);
+		free_double_arr(args);
 		exit(status);
 	}
 	else if (!strcmp(cmd, "env\n"))
