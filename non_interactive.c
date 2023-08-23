@@ -8,9 +8,9 @@ int non_interactive(char **cmd, char ***args, char *app_name)
 
 	while ((read = getline(cmd, &size, stdin)) != -1)
 	{
-		/*if (!strcmp(*cmd, "exit\n") || !strcmp(*cmd, "exit"))
-			/*{
-				/*if (status == 2)*/
+		/*if (!strcmp(*cmd, "exit\n") || !strcmp(*cmd, "exit"))*/
+		/*{*/
+		/*if (status == 2)*/
 		/*exit(2);*/
 		/*	exit(status);*/
 		/*	}*/
