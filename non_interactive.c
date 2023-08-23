@@ -22,7 +22,7 @@ int non_interactive(char **cmd, char ***args, char *app_name)
 		/*}*/
 
 		if (!(status = builtIns(*cmd, *args, status)))
-			break;
+			return 0;
 
 		*args = tokenize_string(*cmd, " \n");
 
