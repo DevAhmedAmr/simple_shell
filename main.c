@@ -1,5 +1,14 @@
 #include "main.h"
-
+/**
+ * main - a entry point to a program the mimics the shell code
+ * interpreter
+ *
+ * @parameters:
+ * @argc: number of command lines args
+ * @argv: command line args
+ *
+ * Return: if success or a error number status otherwise
+ */
 int main(int argc, char **argv)
 {
 	char *cmd = NULL, **args = NULL;
@@ -9,7 +18,7 @@ int main(int argc, char **argv)
 	{
 		status = non_interactive(&cmd, &args, argv[0]);
 		free(cmd);
-		return status;
+		return (status);
 	}
 	else
 		while (1)
@@ -39,8 +48,21 @@ int main(int argc, char **argv)
 			FREE_2D_ARGS_AND_CMD;
 			i++;
 		}
-	return status;
+	return (status);
 }
+
+/**
+ *  builtIns - function that handles built ins functions
+ * like exit , env , cd ,etc ..
+ *
+ * @parameters:
+ * @cmd: command line input to be checked
+ * @args: array of strings that contain command line but splitted
+ * @status: error stats , success if 0 otherwise an error occurred
+ *
+ * Return: 0  if the command line doesn't contain built in
+ * requests otherwise it will return 1
+ */
 
 int builtIns(char *cmd, char **args, int status)
 {
@@ -54,9 +76,9 @@ int builtIns(char *cmd, char **args, int status)
 	else if (!strcmp(cmd, "env\n") || !strcmp(cmd, "env"))
 	{
 		print_2d_arr(environ);
-		return 1;
+		return (1);
 	}
-	return 0;
+	return (0);
 }
 
 /*1 - changed path to path1 and input / bin / ls success */
