@@ -1,5 +1,33 @@
 #include "main.h"
-char *is_executable_in_env_paths(char *input, int command_count, char *app_name)
+#define FREE_RESOURCES           \
+	{                            \
+		free_double_arr(&paths); \
+		free(pathCpy);           \
+	}
+/**
+ * is_executable_in_env_paths - is a function that verifies whether
+ * a given input is an executable file or an alias for an executable file.
+ * Description: The function performs the following checks:
+ *
+ * 1. Checks if the input corresponds to an executable file. That is,
+ * it verifies
+ * if the file exists in the current directory and has execute permissions.
+ *
+ * 2- If the input is an alias, the function checks if it corresponds
+ * to an executable file present in the directories listed in the `PATH`
+ *  environment variable.
+ *
+ * @params:
+ * @input: the first word in  command line that user inputs
+ * @command_count: counter for the loop in the interactive mode
+ * that we use in the massage error if the path is not found
+ * @app_name: the program or the app name that we fetch form argv[0]
+ *
+ * * Return: a pointer to the path if its exist or NULL if now exist
+ */
+
+char *is_executable_in_env_paths(char *input, int command_count,
+								 char *app_name)
 {
 	int i = 0, is_executable;
 	int is_full_path = (input[0] == '.' || input[0] == '/');
@@ -8,12 +36,12 @@ char *is_executable_in_env_paths(char *input, int command_count, char *app_name)
 	if (is_full_path && access(input, X_OK) == 0)
 	{
 		pathCpy = strdup(input);
-		return pathCpy;
+		return (pathCpy);
 	}
 	if (path == NULL)
 	{
 		fprintf(stderr, "%s: %i: %s: not found\n", app_name, command_count, input);
-		return NULL;
+		return (NULL);
 	}
 	pathCpy = strdup(path);
 	paths = tokenize_string(pathCpy, ":=");
@@ -22,27 +50,35 @@ char *is_executable_in_env_paths(char *input, int command_count, char *app_name)
 		if (append_to_path(&paths[i], input) == -1)
 		{
 			fprintf(stderr, "Memory allocation failed");
-			free_double_arr(&paths);
-			free(pathCpy);
-			return NULL;
+			FREE_RESOURCES;
+			return (NULL);
 		}
-
-		if ((is_executable = access(paths[i], X_OK)) == 0)
+		is_executable = access(paths[i], X_OK);
+		if (is_executable == 0)
 		{
 			char *found_path = strdup(paths[i]);
 
-			free_double_arr(&paths);
-			free(pathCpy);
-			return found_path;
+			FREE_RESOURCES;
+			return (found_path);
 		}
 		i++;
 	}
 	free_double_arr(&paths);
 	free(pathCpy);
 	if (is_executable != 0)
-		fprintf(stderr, "%s: %i: %s: not found\n", app_name, command_count, input);
-	return NULL;
+		fprintf(stderr, "%s: %i: %s: not found\n",
+				app_name, command_count, input);
+	return (NULL);
 }
+/**
+ * append_to_path - function that take a path and input
+ * then append the input to the path
+ *
+ * @path: a pointer to 2d array of paths
+ * @input: input to be appended to the path
+ *
+ * Return: 1 in success and -1 in failure
+ */
 
 int append_to_path(char **path, char *input)
 {
@@ -50,12 +86,13 @@ int append_to_path(char **path, char *input)
 
 	/* +2 for the slash and null terminator*/
 	char *tmp;
+
 	tmp = realloc(*path, sizeof(char) * (path_len + input_len + 2));
 
 	if (tmp == NULL)
 	{
 		fprintf(stderr, "Memory reallocation failed.\n");
-		return -1;
+		return (-1);
 	}
 
 	*path = tmp;
@@ -64,5 +101,5 @@ int append_to_path(char **path, char *input)
 	strcat(*path, input);
 
 	/* return success*/
-	return 0;
+	return (0);
 }
