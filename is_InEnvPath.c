@@ -79,7 +79,6 @@ char *is_executable_in_env_paths(char *input, int command_count,
  *
  * Return: 1 in success and -1 in failure
  */
-
 int append_to_path(char **path, char *input)
 {
 	int input_len = strlen(input), path_len = strlen(*path);
