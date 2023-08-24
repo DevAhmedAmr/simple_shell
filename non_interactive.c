@@ -27,7 +27,7 @@ int non_interactive(char **cmd, char ***args)
 		/*	}*/
 		*args = tokenize_string(*cmd, " \n");
 
-		builtIns_status = builtIns(*cmd, *args, builtIns_status);
+		builtIns_status = builtIns(*cmd, *args, status);
 
 		if (builtIns_status)
 		{
@@ -35,7 +35,7 @@ int non_interactive(char **cmd, char ***args)
 			free(*cmd);
 			*cmd = NULL;
 			counter++;
-			continue;
+			return status;
 		}
 
 		if (args[0] != NULL)
