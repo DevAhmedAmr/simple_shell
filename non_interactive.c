@@ -13,8 +13,8 @@ int non_interactive(char **cmd, char ***args)
 {
 	int read;
 	size_t size;
-	int status = 0;
 	int builtIns_status;
+	int status;
 
 	while ((read = getline(cmd, &size, stdin)) != -1)
 	{
@@ -27,19 +27,16 @@ int non_interactive(char **cmd, char ***args)
 		/*	}*/
 		*args = tokenize_string(*cmd, " \n");
 
-		builtIns_status = builtIns(*cmd, *args, status);
+		builtIns_status = builtIns(*cmd, *args, builtIns_status);
 
 		if (builtIns_status)
 		{
 			free_double_arr(args);
 			free(*cmd);
-
+			*cmd = NULL;
 			counter++;
 			continue;
 		}
-
-		if (status)
-			return (0);
 
 		if (args[0] != NULL)
 			status = tryExecuteCommand((*args)[0], *args);
