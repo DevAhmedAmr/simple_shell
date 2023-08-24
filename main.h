@@ -23,19 +23,13 @@ char **tokenize_string(char *path, char *del);
 void free_3d_arr(char ***args);
 void print3d_arr(char ***threeD_arr);
 void print_2d_arr(char **args);
-int non_interactive(char **cmd, char ***args, char *app_name);
+int non_interactive(char **cmd, char ***args);
 void non_(char **cmd, char ***args);
 int ExecuteCommand(char *input, char **args);
 int builtIns(char *cmd, char **args, int status);
 void print_2d_arr(char **args);
 int append_to_path(char **path, char *input);
 
-char *is_executable_in_env_paths(char *input,
-								 int command_count,
-								 char *app_name);
-
-int tryExecuteCommand(char *input, char **args,
-					  int command_count,
-					  char *app_name);
-
+char *is_executable_in_env_paths(char *input);
+int tryExecuteCommand(char *input, char **args);
 #endif

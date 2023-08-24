@@ -18,8 +18,7 @@
  * or 127 if didn't find the command in the env paths
  */
 
-int tryExecuteCommand(char *input, char **args,
-					  int command_count, char *app_name)
+int tryExecuteCommand(char *input, char **args)
 {
 	char *exc_path;
 	int execve_status = 0;
@@ -27,7 +26,7 @@ int tryExecuteCommand(char *input, char **args,
 	if (input == NULL)
 		return (0);
 
-	exc_path = is_executable_in_env_paths(input, command_count, app_name);
+	exc_path = is_executable_in_env_paths(input);
 
 	if (exc_path)
 	{

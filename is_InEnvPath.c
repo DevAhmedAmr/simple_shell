@@ -1,4 +1,6 @@
 #include "main.h"
+extern int counter;
+extern char *app_name;
 #define FREE_RESOURCES           \
 	{                            \
 		free_double_arr(&paths); \
@@ -26,8 +28,7 @@
  * * Return: a pointer to the path if its exist or NULL if now exist
  */
 
-char *is_executable_in_env_paths(char *input, int command_count,
-								 char *app_name)
+char *is_executable_in_env_paths(char *input)
 {
 	int i = 0, is_executable;
 	int is_full_path = (input[0] == '.' || input[0] == '/');
@@ -40,7 +41,7 @@ char *is_executable_in_env_paths(char *input, int command_count,
 	}
 	if (path == NULL)
 	{
-		fprintf(stderr, "%s: %i: %s: not found\n", app_name, command_count, input);
+		fprintf(stderr, "%s: %i: %s: not found\n", app_name, counter, input);
 		return (NULL);
 	}
 	pathCpy = strdup(path);
@@ -67,7 +68,7 @@ char *is_executable_in_env_paths(char *input, int command_count,
 	free(pathCpy);
 	if (is_executable != 0)
 		fprintf(stderr, "%s: %i: %s: not found\n",
-				app_name, command_count, input);
+				app_name, counter, input);
 	return (NULL);
 }
 /**

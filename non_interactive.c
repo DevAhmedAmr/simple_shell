@@ -1,4 +1,5 @@
 #include "main.h"
+extern int counter;
 /**
  * non_interactive - run the shell in interactive mode
  *
@@ -8,11 +9,12 @@
  * Return:the getline function return (-1) indicate error or  file end
  */
 
-int non_interactive(char **cmd, char ***args, char *app_name)
+int non_interactive(char **cmd, char ***args)
 {
 	int read;
 	size_t size;
-	int i = 1, status = 0;
+	int status = 0;
+	int builtIns_status;
 
 	while ((read = getline(cmd, &size, stdin)) != -1)
 	{
@@ -23,19 +25,28 @@ int non_interactive(char **cmd, char ***args, char *app_name)
 		/*exit(2);*/
 		/*	exit(status);*/
 		/*	}*/
-		status = builtIns(*cmd, *args, status);
+		*args = tokenize_string(*cmd, " \n");
+
+		builtIns_status = builtIns(*cmd, *args, status);
+
+		if (builtIns_status)
+		{
+			free_double_arr(args);
+			free(*cmd);
+
+			counter++;
+			continue;
+		}
 
 		if (status)
 			return (0);
 
-		*args = tokenize_string(*cmd, " \n");
-
 		if (args[0] != NULL)
-			status = tryExecuteCommand((*args)[0], *args, i, app_name);
+			status = tryExecuteCommand((*args)[0], *args);
 
 		free_double_arr(args);
 
-		i++;
+		counter++;
 	}
 	return (status);
 }
