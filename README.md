@@ -4,6 +4,8 @@ This project is a Linux Ubuntu shell simulation implemented in C, designed to pr
 #Description
 The Linux Ubuntu Shell Simulation project aims to replicate a basic shell environment found in Linux systems. It allows users to interact with the simulated shell, execute commands, and explore various shell functionalities. The project focuses on providing a hands-on learning experience for understanding C programming and Linux system calls.
 
+
+
 Features
 Command execution: Users can enter commands, and the shell simulation will execute them.
 Basic shell functionalities: The shell simulation supports common shell features like command parsing, executing external programs, and handling input/output redirection.
