@@ -1,6 +1,8 @@
 #include "main.h"
 int Exit_fun(char *cmd, char **args, int *status);
-int stringToInt(char *str);
+int positive_parseInt(char *str);
+char *app_name;
+int counter = 1;
 /**
  * main - a entry point to a program the mimics the shell code
  * interpreter
@@ -11,14 +13,12 @@ int stringToInt(char *str);
  *
  * Return: if success or a error number status otherwise
  */
-char *app_name;
-int counter = 1;
 int main(int argc, char **argv)
 {
 	char *cmd = NULL, **args = NULL;
 	int interActive = isatty(STDIN_FILENO), status = 0;
-	app_name = argv[0];
 
+	app_name = argv[0];
 	(void)argc;
 	if (!interActive)
 	{
@@ -73,7 +73,7 @@ int builtIns(char *cmd, char **args, int *status)
 {
 
 	if (args[0] != NULL && Exit_fun(cmd, args, status) == 1)
-		return 1;
+		return (1);
 
 	else if (!strcmp(cmd, "env\n") || !strcmp(cmd, "env"))
 	{
@@ -82,10 +82,23 @@ int builtIns(char *cmd, char **args, int *status)
 	}
 	return (0);
 }
+
+/**
+ * Exit_fun - function that handles the input if its' exit
+ *
+ * Description: function that handles the cmd
+ *  if its 'exit' with or without arguments
+ *
+ * @cmd: command line input argument
+ * @args: command line input argument splitted into an array
+ * @status: the last operation status in the entire app
+ * Return: '1' if the exit argument if not valid
+ *  '0'  if the command line arg is not a built in arg
+ */
 int Exit_fun(char *cmd, char **args, int *status)
 {
 	int isExit = (!strcmp("exit\n", cmd) || !strcmp("exit", cmd));
-	int custom_exit_status = stringToInt(args[1]);
+	int custom_exit_status = positive_parseInt(args[1]);
 	/*printf("%i %i %i\n", isExit, args[1] != NULL, custom_exit_status > -1);*/
 
 	if (isExit && args[1] == NULL)
@@ -110,30 +123,39 @@ int Exit_fun(char *cmd, char **args, int *status)
 	}
 	return (0);
 }
-/*1 - changed path to path1 and input / bin / ls success */
-/*2 - removed path input ls fail*/
-int stringToInt(char *str)
+/**
+ * positive_parseInt -a function that parse string into positive int
+ *
+ * Description: a function that parse string into an integer but
+ * it only supports positive numbers
+ * @str: string to be parsed to int
+ *
+ * Return: -1 if the string is not a positive number (on failure)
+ * and the number if success
+ * @retval
+ */
+
+int positive_parseInt(char *str)
 {
 	int result = 0;
 	int i = 0;
 
 	if (str == NULL)
-		return -1;
+		return (-1);
 
 	while (str[i] != '\0')
 	{
-
 		char parsing = (int)str[i] - 48;
+
 		if (parsing <= 9 && parsing >= 0)
 		{
 			result *= 10;
 			result += parsing;
 		}
 		else
-		{
-			return -1;
-		}
+			return (-1);
+
 		i++;
 	}
-	return result;
+	return (result);
 }

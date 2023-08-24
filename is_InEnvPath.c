@@ -1,6 +1,4 @@
 #include "main.h"
-extern int counter;
-extern char *app_name;
 #define FREE_RESOURCES           \
 	{                            \
 		free_double_arr(&paths); \
@@ -21,9 +19,6 @@ extern char *app_name;
  *
  * @params:
  * @input: the first word in  command line that user inputs
- * @command_count: counter for the loop in the interactive mode
- * that we use in the massage error if the path is not found
- * @app_name: the program or the app name that we fetch form argv[0]
  *
  * * Return: a pointer to the path if its exist or NULL if now exist
  */

@@ -1,11 +1,9 @@
 #include "main.h"
-extern int counter;
 /**
  * non_interactive - run the shell in interactive mode
  *
  * @cmd: command
  * @args: array of argument that hve ben tokenize
- * @app_name: the app exe name (argv[0])
  * Return:the getline function return (-1) indicate error or  file end
  */
 
@@ -35,7 +33,7 @@ int non_interactive(char **cmd, char ***args)
 			free(*cmd);
 			*cmd = NULL;
 			counter++;
-			return status;
+			return (status);
 		}
 
 		if (args[0] != NULL)
