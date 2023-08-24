@@ -12,7 +12,7 @@ Basic shell functionalities: The shell simulation supports common shell features
 Built-in commands: Some built-in commands, such as cd, ls, and exit, are implemented to provide a comprehensive shell experience.
 Error handling: Proper error handling mechanisms are implemented to handle errors gracefully and provide meaningful error messages to users.
 Practice exercises: The project includes practice exercises and examples to help users understand C programming concepts and Linux system calls better.
-Getting Started
+# Getting Started
 To get started with the Linux Ubuntu Shell Simulation project, follow these steps:
 
 Clone the project repository to your local machine.
@@ -22,7 +22,7 @@ Start exploring the shell simulation by entering commands and experimenting with
 Requirements
 C Compiler (e.g., GCC)
 Linux environment (e.g., Ubuntu)
-Usage
+# Usage
 Enter commands in the shell simulation to execute them.
 Use the built-in commands (cd, ls, exit, etc.) to perform specific actions.
 Experiment with input/output redirection and other shell functionalities.
@@ -30,13 +30,13 @@ Refer to the provided documentation and practice exercises to enhance your under
 Contributions
 Contributions to the Linux Ubuntu Shell Simulation project are welcome! If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request.
 
-License
+# License
 This project is licensed under the MIT License ↗. See the LICENSE file for more details.
 
-Acknowledgments
+# Acknowledgments
 We would like to acknowledge the contributions of the open-source community and the valuable resources available for learning C programming and Linux system concepts.
 
-Contact
+# Contact
 For any inquiries or questions about the Linux Ubuntu Shell Simulation project, please contact:
 
 Your Name
