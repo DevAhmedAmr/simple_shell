@@ -14,7 +14,7 @@ int non_interactive(char **cmd, char ***args)
 	int read;
 	size_t size;
 	int builtIns_status;
-	int status;
+	int status = 0;
 
 	while ((read = getline(cmd, &size, stdin)) != -1)
 	{
