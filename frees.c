@@ -1,7 +1,7 @@
 #include "main.h"
 #include "main.h"
 /**
- * free_double_arr - free double aaray
+ * free_double_arr - free double arr
  * @args: double array
  */
 
@@ -21,8 +21,9 @@ void free_double_arr(char ***args)
 	free(*args);
 	*args = NULL;
 }
+
 /**
- * free_double_arr - free 3d aaray
+ * free_3d_arr - free 3d arr
  * @args: 3d array
  */
 void free_3d_arr(char ***args)

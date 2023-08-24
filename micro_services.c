@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * _getEnv - get inveromint path
+ * _getEnv - get environment path
  *
  * @env:string "PATH="
  * Return: (char*) pointer to env path
@@ -21,7 +21,7 @@ char *_getEnv(char *env)
 	return (NULL);
 }
 /**
- * print3d_arr - parint 3d array
+ * print3d_arr - print 3d array
  * @threeD_arr:  3d array
  */
 void print3d_arr(char ***threeD_arr)
@@ -44,9 +44,9 @@ void print3d_arr(char ***threeD_arr)
 		putchar('\n');
 	}
 }
-/*
- * print_2d_arr - parint 2d array
- * @threeD_arr:  2d array
+/**
+ *  print_2d_arr - print 2d array
+ * @args:  2d array
  */
 void print_2d_arr(char **args)
 {

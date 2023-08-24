@@ -1,13 +1,10 @@
 #include "main.h"
-
-#include "main.h"
-#include "main.h"
 /**
  * interactive_mode - run the shell in interactive mode
  *
  * @cmd: command
- * @args: array of ragument that hve ben tokenize
- * Return:the gitline function return (-1) indecats eeeor or  file end
+ * @args: array of argument that hve ben tokenize
+ * Return: the getline function return (-1) indicate error or file end
  */
 
 int interactive_mode(char **cmd, char ***args)

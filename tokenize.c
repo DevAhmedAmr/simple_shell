@@ -2,8 +2,8 @@
 /**
  * tokenize_string - returns an 2d array of tokenized string
  *
- * @str: string to tokenze
- * @delim:tokenize delimeter
+ * @str: string to be tokenized
+ * @delim: tokenize delimeter
  * Return: (char**) 2d array of tokenized string
  */
 char **tokenize_string(char *str, char *delim)
