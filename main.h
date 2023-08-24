@@ -26,7 +26,7 @@ void print_2d_arr(char **args);
 int non_interactive(char **cmd, char ***args);
 void non_(char **cmd, char ***args);
 int ExecuteCommand(char *input, char **args);
-int builtIns(char *cmd, char **args, int status);
+int builtIns(char *cmd, char **args, int *status);
 void print_2d_arr(char **args);
 int append_to_path(char **path, char *input);
 

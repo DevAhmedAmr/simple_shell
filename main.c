@@ -1,5 +1,5 @@
 #include "main.h"
-int Exit_fun(char *cmd, char **args, int status);
+int Exit_fun(char *cmd, char **args, int *status);
 int stringToInt(char *str);
 /**
  * main - a entry point to a program the mimics the shell code
@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 				exit(status);
 			}
 
-			if (builtIns(cmd, args, status))
+			if (builtIns(cmd, args, &status))
 			{
 				FREE_2D_ARGS_AND_CMD;
 				counter++;
@@ -69,7 +69,7 @@ int main(int argc, char **argv)
  * requests otherwise it will return 1
  */
 
-int builtIns(char *cmd, char **args, int status)
+int builtIns(char *cmd, char **args, int *status)
 {
 
 	if (args[0] != NULL && Exit_fun(cmd, args, status) == 1)
@@ -82,7 +82,7 @@ int builtIns(char *cmd, char **args, int status)
 	}
 	return (0);
 }
-int Exit_fun(char *cmd, char **args, int status)
+int Exit_fun(char *cmd, char **args, int *status)
 {
 	int isExit = (!strcmp("exit\n", cmd) || !strcmp("exit", cmd));
 	int custom_exit_status = stringToInt(args[1]);
@@ -92,7 +92,7 @@ int Exit_fun(char *cmd, char **args, int status)
 	{
 		free(cmd);
 		free_double_arr(&args);
-		exit(status);
+		exit(*status);
 	}
 
 	else if (isExit && args[1] != NULL && custom_exit_status > -1)
@@ -103,6 +103,7 @@ int Exit_fun(char *cmd, char **args, int status)
 	}
 	else if (isExit && args[1] != NULL)
 	{
+		*status = 2;
 		fprintf(stderr, "%s: %i: %s: Illegal number: %s\n",
 				app_name, counter, cmd, args[1]);
 		return (1);
