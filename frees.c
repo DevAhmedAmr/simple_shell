@@ -1,4 +1,10 @@
 #include "main.h"
+#include "main.h"
+/**
+ * free_double_arr - free double aaray
+ * @args: double array
+ */
+
 void free_double_arr(char ***args)
 {
 	int j;
@@ -15,7 +21,10 @@ void free_double_arr(char ***args)
 	free(*args);
 	*args = NULL;
 }
-
+/**
+ * free_double_arr - free 3d aaray
+ * @args: 3d array
+ */
 void free_3d_arr(char ***args)
 {
 	int j, i;

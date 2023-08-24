@@ -1,4 +1,11 @@
 #include "main.h"
+
+/**
+ * _getEnv - get inveromint path
+ *
+ * @env:string "PATH="
+ * Return: (char*) pointer to env path
+ */
 char *_getEnv(char *env)
 {
 	char **s = environ;
@@ -6,13 +13,17 @@ char *_getEnv(char *env)
 	while (*s != NULL)
 	{
 		if (strncmp(*s, env, 5) == 0)
-			return *s;
+			return (*s);
 
 		s++;
 	}
 
-	return NULL;
+	return (NULL);
 }
+/**
+ * print3d_arr - parint 3d array
+ * @threeD_arr:  3d array
+ */
 void print3d_arr(char ***threeD_arr)
 {
 	size_t i;
@@ -33,6 +44,10 @@ void print3d_arr(char ***threeD_arr)
 		putchar('\n');
 	}
 }
+/*
+ * print_2d_arr - parint 2d array
+ * @threeD_arr:  2d array
+ */
 void print_2d_arr(char **args)
 {
 	size_t j;
