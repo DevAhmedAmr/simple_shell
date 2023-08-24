@@ -1,7 +1,7 @@
-Linux Ubuntu Shell Simulation
+#Linux Ubuntu Shell Simulation
 This project is a Linux Ubuntu shell simulation implemented in C, designed to provide a practice environment for learning C programming and Linux system concepts.
 
-Description
+#Description
 The Linux Ubuntu Shell Simulation project aims to replicate a basic shell environment found in Linux systems. It allows users to interact with the simulated shell, execute commands, and explore various shell functionalities. The project focuses on providing a hands-on learning experience for understanding C programming and Linux system calls.
 
 Features
@@ -29,7 +29,7 @@ Contributions
 Contributions to the Linux Ubuntu Shell Simulation project are welcome! If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request.
 
 License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the MIT License ↗. See the LICENSE file for more details.
 
 Acknowledgments
 We would like to acknowledge the contributions of the open-source community and the valuable resources available for learning C programming and Linux system concepts.
@@ -37,6 +37,7 @@ We would like to acknowledge the contributions of the open-source community and 
 Contact
 For any inquiries or questions about the Linux Ubuntu Shell Simulation project, please contact:
 
-Your Name Your Email Address
+Your Name
+Your Email Address
 
 Feel free to reach out with any feedback or suggestions!
