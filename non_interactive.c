@@ -3,32 +3,39 @@
 #include "main.h"
 #include "main.h"
 /**
- * interactive_mode - run the shell in interactive mode
+ * non_interactive - run the shell in interactive mode
  *
  * @cmd: command
  * @args: array of argument that hve ben tokenize
  * Return:the getline function return (-1) indicate error or  file end
  */
 
-int interactive_mode(char **cmd, char ***args)
+int non_interactive(char **cmd, char ***args, char *app_name)
 {
-	size_t size = 0;
+	int read;
+	size_t size;
+	int i = 1, status = 0;
 
-	int read = getline(cmd, &size, stdin);
+	while ((read = getline(cmd, &size, stdin)) != -1)
+	{
+		/*if (!strcmp(*cmd, "exit\n") || !strcmp(*cmd, "exit"))*/
+		/*{*/
+		/*if (status == 2)*/
+		/*exit(2);*/
+		/*	exit(status);*/
+		/*	}*/
 
-	if (read == -1)
-		return (EOF);
+		if ((status = builtIns(*cmd, *args, status)))
+			return 0;
 
-	/*if (!strcmp(*cmd, "exit\n"))*/
-	/*{*/
-	/*free(*cmd);*/
-	/*free(*args);*/
-	/*exit(0);*/
-	/*}*/
+		*args = tokenize_string(*cmd, " \n");
 
-	/*free the old args value before reassigning it*/
-	free(*args);
-	*args = tokenize_string(*cmd, " \n");
+		if (args[0] != NULL)
+			status = tryExecuteCommand((*args)[0], *args, i, app_name);
 
-	return (0);
+		free_double_arr(args);
+
+		i++;
+	}
+	return status;
 }
