@@ -77,8 +77,6 @@ int builtIns(char *cmd, char **args, int status)
 
 	else if (!strcmp(cmd, "env\n") || !strcmp(cmd, "env"))
 	{
-		printf("\n\n%s\n\n", cmd);
-
 		print_2d_arr(environ);
 		return (1);
 	}
