@@ -35,7 +35,7 @@ int non_interactive(char **cmd, char ***args)
 			free(*cmd);
 			*cmd = NULL;
 			counter++;
-			return builtIns_status;
+			continue;
 		}
 
 		if (args[0] != NULL)
