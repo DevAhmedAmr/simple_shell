@@ -4,14 +4,14 @@ int positive_parseInt(char *str);
 char *app_name;
 int counter = 1;
 /**
- * main - a entry point to a program the mimics the shell code
+ * main - a entry point to a program that mimics the shell code
  * interpreter
  *
  * @parameters:
  * @argc: number of command lines args
  * @argv: command line args
  *
- * Return: if success or a error number status otherwise
+ * Return: (0) if success or a error number status
  */
 int main(int argc, char **argv)
 {
