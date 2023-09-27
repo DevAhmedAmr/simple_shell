@@ -5,14 +5,12 @@ int set_env(char **input)
 {
 	char *env_var = NULL;
 	char *value = NULL;
-	char *var = NULL;
 
 	if (double_arr_len(input) < 3)
 		return 0;
 
 	env_var = input[1];
 	value = input[2];
-	var = _getEnv(env_var);
 	return setenv(env_var, value, 4);
 }
 int unset_env(char **input)
