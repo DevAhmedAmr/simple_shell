@@ -31,7 +31,9 @@ int ExecuteCommand(char *input, char **args);
 int builtIns(char *cmd, char **args, int *status);
 void print_2d_arr(char **args);
 int append_to_path(char **path, char *input);
-
+int double_arr_len(char **arr);
 char *is_executable_in_env_paths(char *input);
 int tryExecuteCommand(char *input, char **args);
+int set_env(char **input);
+int unset_env(char **input);
 #endif

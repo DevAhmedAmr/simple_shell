@@ -80,6 +80,16 @@ int builtIns(char *cmd, char **args, int *status)
 		print_2d_arr(environ);
 		return (1);
 	}
+	else if (!strcmp("setenv\n", cmd) || !strcmp("setenv", cmd))
+	{
+		set_env(args);
+		return (1);
+	}
+	else if (!strcmp("unsetenv\n", cmd) || !strcmp("unsetenv", cmd))
+	{
+		unset_env(args);
+		return (1);
+	}
 	return (0);
 }
 
