@@ -27,13 +27,13 @@ int non_interactive(char **cmd, char ***args)
 
 		builtIns_status = builtIns(*cmd, *args, &status);
 
-		if (builtIns_status)
+		if (builtIns_status == 1)
 		{
 			free_double_arr(args);
 			free(*cmd);
 			*cmd = NULL;
 			counter++;
-			return (status);
+			continue;
 		}
 
 		if (args[0] != NULL)
