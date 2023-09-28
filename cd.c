@@ -6,7 +6,7 @@ int change_dir(char *path)
 	;
 	if (chdir(path) == -1)
 	{
-		fprintf(stderr, "cd: no such file or directory: %s\n", path);
+		fprintf(stderr, "%s: %i: cd: can't cd to %s\n", app_name, counter, path);
 		return (-1);
 	}
 
