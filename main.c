@@ -102,10 +102,18 @@ int builtIns(char *cmd, char **args, int *status)
 		if (args[1] == NULL)
 		{
 			char *home_dir = _getnEnv("HOME", 4);
-			char *home_dir_cpy = strdup(home_dir);
+			char *home_dir_cpy;
 			char **home_dir_arr;
 
+			if (home_dir == NULL)
+			{
+				fprintf(stderr, "something went wrong with env\n");
+				return (1);
+			}
+
+			home_dir_cpy = strdup(home_dir);
 			is_malloc_failed(home_dir_cpy);
+
 			home_dir_arr = tokenize_string(home_dir_cpy, "=");
 
 			is_malloc_failed(home_dir_arr);
