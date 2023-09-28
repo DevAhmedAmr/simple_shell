@@ -22,31 +22,31 @@ int change_dir(char *path)
 	return (0);
 }
 /**
- * update_OLDPWD - a helper function to "cd" that only
- * set or update the OLDPWD environment variable
+ * update_OLDPWD - a helper function to "cd" that only set or
+ * update the OLDPWD environment variable to the current PWD
  *
  * @old_pwd_path: a pointer to the new (OLDPWD) env value
  * that will be updated to
  *
  * Return: (1) on succsess ,  (-1) if malloc failed or  the path doesn't exist
  */
-int update_OLDPWD(char *old_pwd_path)
+int update_OLDPWD(char *PWD)
 {
-	char *old_pwd_cpy = strdup(old_pwd_path);
-	char **old_pwd_arr;
+	char *PWD_cpy = strdup(PWD);
+	char **PWD_arr;
 
-	if (old_pwd_cpy == NULL)
+	if (PWD_cpy == NULL)
 		return (1);
 
-	old_pwd_arr = tokenize_string(old_pwd_cpy, "=");
+	PWD_arr = tokenize_string(PWD_cpy, "=");
 
-	if (old_pwd_arr == NULL)
+	if (PWD_arr == NULL)
 		return (-1);
 
-	setenv("OLDPWD", old_pwd_arr[1], 1);
+	setenv("OLDPWD", PWD_arr[1], 1);
 
-	free(old_pwd_cpy);
-	free_double_arr(&old_pwd_arr);
+	free(PWD_cpy);
+	free_double_arr(&PWD_arr);
 
 	return (1);
 }

@@ -1,7 +1,5 @@
 #include "main.h"
 
-char *app_name;
-int counter = 1;
 /**
  * main - a entry point to a program that mimics the shell code
  * interpreter

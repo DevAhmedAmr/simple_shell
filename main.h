@@ -5,8 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/wait.h>
-extern int counter;
-extern char *app_name;
+char *app_name;
+int counter = 1;
 #define FREE_2D_ARGS_AND_CMD    \
 	{                           \
 		free_double_arr(&args); \
