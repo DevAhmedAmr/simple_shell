@@ -1,11 +1,5 @@
 #include "main.h"
-int Exit_fun(char *cmd, char **args, int *status);
-int positive_parseInt(char *str);
-int update_OLDPWD();
-void print_strn(char *str, int n);
-int handling_NULL_OLDPATH(char *PWD);
-int cd_to_OLD_PATH(char *PWD);
-int cd_Home_path(char *PWD);
+
 char *app_name;
 int counter = 1;
 /**
@@ -97,22 +91,7 @@ int builtIns(char *cmd, char **args, int *status)
 	}
 	else if (!strcmp("cd", cmd))
 	{
-
-		char *PWD = (_getnEnv("PWD", 3));
-
-		if (PWD == NULL)
-			return (1);
-
-		if (args[1] == NULL)
-			return cd_Home_path(PWD);
-
-		if (!strcmp("-", args[1]) || !strcmp("-\n", args[1]))
-			return cd_to_OLD_PATH(PWD);
-
-		update_OLDPWD(PWD);
-		change_dir(args[1]);
-
-		return (1);
+		return cd(args);
 	}
 	return (0);
 }
@@ -192,92 +171,4 @@ int positive_parseInt(char *str)
 		i++;
 	}
 	return (result);
-}
-
-int update_OLDPWD(char *old_pwd_path)
-{
-	char *old_pwd_cpy = strdup(old_pwd_path);
-	char **old_pwd_arr;
-
-	if (old_pwd_cpy == NULL)
-		return 1;
-
-	old_pwd_arr = tokenize_string(old_pwd_cpy, "=");
-
-	if (old_pwd_arr == NULL)
-		return 1;
-
-	setenv("OLDPWD", old_pwd_arr[1], 1);
-
-	free(old_pwd_cpy);
-	free_double_arr(&old_pwd_arr);
-
-	return 0;
-}
-void print_strn(char *str, int n)
-{
-	size_t i;
-
-	for (i = n; i < strlen(str); i++)
-		putchar(str[i]);
-}
-
-int handling_NULL_OLDPATH(char *PWD)
-{
-	char *PWD_cpy = malloc(strlen(PWD) + 2 * sizeof(char));
-
-	strcpy(PWD_cpy, PWD);
-
-	if (!PWD_cpy)
-		return (1);
-
-	strcat(PWD_cpy, "\n");
-	print_strn(PWD_cpy, 4);
-
-	free(PWD_cpy);
-	return (1);
-}
-int cd_to_OLD_PATH(char *PWD)
-{
-	char *OLDPWD = (_getEnv("OLDPWD"));
-	char **arr;
-	char *oldPWD_cpy;
-
-	if (OLDPWD == NULL)
-		return handling_NULL_OLDPATH(PWD);
-
-	oldPWD_cpy = strdup(OLDPWD);
-	arr = tokenize_string(oldPWD_cpy, "=");
-
-	printf("%s\n", arr[1]);
-
-	update_OLDPWD(PWD);
-	change_dir(arr[1]);
-
-	free_double_arr(&arr);
-	free(oldPWD_cpy);
-	return (1);
-}
-int cd_Home_path(char *PWD)
-{
-	char *home_dir = _getnEnv("HOME", 4);
-	char *home_dir_cpy = NULL;
-	char **home_dir_arr = NULL;
-
-	if (home_dir == NULL)
-		return (1);
-
-	home_dir_cpy = strdup(home_dir);
-	is_malloc_failed(home_dir_cpy);
-
-	home_dir_arr = tokenize_string(home_dir_cpy, "=");
-
-	is_malloc_failed(home_dir_arr);
-
-	update_OLDPWD(PWD);
-	change_dir(home_dir_arr[1]);
-
-	free(home_dir_cpy);
-	free_double_arr(&home_dir_arr);
-	return (1);
 }

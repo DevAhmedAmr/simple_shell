@@ -48,4 +48,11 @@ int set_env(char **input);
 int unset_env(char **input);
 int change_dir(char *path);
 char *_getnEnv(char *env, int n);
+int Exit_fun(char *cmd, char **args, int *status);
+int positive_parseInt(char *str);
+void print_strn(char *str, int n);
+int handling_NULL_OLDPWD(char *PWD);
+int cd_to_OLDPWD(char *PWD);
+int cd_Home_path(char *PWD);
+int cd(char **args);
 #endif

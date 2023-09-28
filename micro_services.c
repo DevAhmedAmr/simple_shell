@@ -76,3 +76,10 @@ char *_getnEnv(char *env, int n)
 
 	return (NULL);
 }
+void print_strn(char *str, int n)
+{
+	size_t i;
+
+	for (i = n; i < strlen(str); i++)
+		putchar(str[i]);
+}
