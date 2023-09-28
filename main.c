@@ -139,8 +139,12 @@ int builtIns(char *cmd, char **args, int *status)
 		if (!strcmp("-", args[1]) || !strcmp("-\n", args[1]))
 		{
 
+			/*is_malloc_failed(PWD_arr);*/
+			printf("%s\n", arr[1]);
+
 			update_OLDPWD(PWD);
 			change_dir(arr[1]);
+
 			free_double_arr(&arr);
 			free(oldPWD_cpy);
 			return (1);
