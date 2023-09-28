@@ -97,7 +97,6 @@ int builtIns(char *cmd, char **args, int *status)
 
 		char *oldPWD_cpy;
 		char *PWD = (_getnEnv("PWD", 3));
-		char **arr;
 
 		if (PWD == NULL)
 			return (1);
@@ -109,10 +108,7 @@ int builtIns(char *cmd, char **args, int *status)
 			char **home_dir_arr = NULL;
 
 			if (home_dir == NULL)
-			{
-				free_double_arr(&arr);
 				return (1);
-			}
 
 			home_dir_cpy = strdup(home_dir);
 			is_malloc_failed(home_dir_cpy);
@@ -132,6 +128,7 @@ int builtIns(char *cmd, char **args, int *status)
 		if (!strcmp("-", args[1]) || !strcmp("-\n", args[1]))
 		{
 			char *OLDPWD = (_getEnv("OLDPWD"));
+			char **arr;
 
 			if (OLDPWD == NULL)
 				return (1);
