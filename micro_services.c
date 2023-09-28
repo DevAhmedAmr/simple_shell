@@ -55,3 +55,24 @@ void print_2d_arr(char **args)
 	for (j = 0; args[j] != NULL; j++)
 		printf("%s\n", args[j]);
 }
+
+/**
+ * _getnEnv - get environment path
+ *
+ * @env:string "PATH="
+ * Return: (char*) pointer to env path
+ */
+char *_getnEnv(char *env, int n)
+{
+	char **s = environ;
+
+	while (*s != NULL)
+	{
+		if (strncmp(*s, env, n) == 0)
+			return (*s);
+
+		s++;
+	}
+
+	return (NULL);
+}

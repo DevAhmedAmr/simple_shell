@@ -17,6 +17,16 @@ extern char *app_name;
 		free(*args);      \
 		free(cmd);        \
 	}
+
+#define is_malloc_failed(allocation)                     \
+	{                                                    \
+		if (allocation == NULL)                          \
+		{                                                \
+			fprintf(stderr, "memory allocation failed"); \
+			return -1;                                   \
+		}                                                \
+	}
+
 extern char **environ;
 int interactive_mode(char **cmd, char ***args);
 char *_getEnv(char *path);
@@ -36,4 +46,6 @@ char *is_executable_in_env_paths(char *input);
 int tryExecuteCommand(char *input, char **args);
 int set_env(char **input);
 int unset_env(char **input);
+int change_dir(char *path);
+char *_getnEnv(char *env, int n);
 #endif

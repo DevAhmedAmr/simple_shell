@@ -1,6 +1,8 @@
 #include "main.h"
 int Exit_fun(char *cmd, char **args, int *status);
 int positive_parseInt(char *str);
+int update_OLDPWD();
+
 char *app_name;
 int counter = 1;
 /**
@@ -90,6 +92,51 @@ int builtIns(char *cmd, char **args, int *status)
 		unset_env(args);
 		return (1);
 	}
+	else if (!strcmp("cd", cmd))
+	{
+
+		char *oldPWD_cpy = strdup(_getEnv("OLDPWD"));
+		char *PWD = (_getnEnv("PWD", 3));
+		char **arr = tokenize_string(oldPWD_cpy, "=");
+
+		if (args[1] == NULL)
+		{
+			char *home_dir = _getnEnv("HOME", 4);
+			char *home_dir_cpy = strdup(home_dir);
+			char **home_dir_arr;
+
+			is_malloc_failed(home_dir_cpy);
+			home_dir_arr = tokenize_string(home_dir_cpy, "=");
+
+			is_malloc_failed(home_dir_arr);
+
+			update_OLDPWD(PWD);
+			change_dir(home_dir_arr[1]);
+
+			free(home_dir_cpy);
+			free_double_arr(&home_dir_arr);
+			free_double_arr(&arr);
+			free(oldPWD_cpy);
+			return (1);
+		}
+
+		if (!strcmp("-", args[1]) || !strcmp("-\n", args[1]))
+		{
+
+			update_OLDPWD(PWD);
+			change_dir(arr[1]);
+			free_double_arr(&arr);
+			free(oldPWD_cpy);
+			return (1);
+		}
+
+		update_OLDPWD(PWD);
+		change_dir(args[1]);
+
+		free(oldPWD_cpy);
+		free_double_arr(&arr);
+		return (1);
+	}
 	return (0);
 }
 
@@ -168,4 +215,25 @@ int positive_parseInt(char *str)
 		i++;
 	}
 	return (result);
+}
+
+int update_OLDPWD(char *old_pwd_path)
+{
+	char *old_pwd_cpy = strdup(old_pwd_path);
+	char **old_pwd_arr;
+
+	if (old_pwd_cpy == NULL)
+		return 1;
+
+	old_pwd_arr = tokenize_string(old_pwd_cpy, "=");
+
+	if (old_pwd_arr == NULL)
+		return 1;
+
+	setenv("OLDPWD", old_pwd_arr[1], 1);
+
+	free(old_pwd_cpy);
+	free_double_arr(&old_pwd_arr);
+
+	return 0;
 }
