@@ -95,9 +95,17 @@ int builtIns(char *cmd, char **args, int *status)
 	else if (!strcmp("cd", cmd))
 	{
 
-		char *oldPWD_cpy = strdup(_getEnv("OLDPWD"));
+		char *oldPWD_cpy;
 		char *PWD = (_getnEnv("PWD", 3));
-		char **arr = tokenize_string(oldPWD_cpy, "=");
+		char **arr;
+		char *OLDPWD = (_getEnv("OLDPWD"));
+
+		if (OLDPWD == NULL || PWD == NULL)
+		{
+			return 1;
+		}
+		oldPWD_cpy = strdup(OLDPWD);
+		arr = tokenize_string(oldPWD_cpy, "=");
 
 		if (args[1] == NULL)
 		{
