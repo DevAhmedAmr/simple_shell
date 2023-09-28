@@ -107,7 +107,6 @@ int builtIns(char *cmd, char **args, int *status)
 
 			if (home_dir == NULL)
 			{
-				fprintf(stderr, "something went wrong with env\n");
 				free_double_arr(&arr);
 				free(oldPWD_cpy);
 				return (1);
