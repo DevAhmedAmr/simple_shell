@@ -101,9 +101,8 @@ int builtIns(char *cmd, char **args, int *status)
 		char *OLDPWD = (_getEnv("OLDPWD"));
 
 		if (OLDPWD == NULL || PWD == NULL)
-		{
-			return 1;
-		}
+			return (1);
+
 		oldPWD_cpy = strdup(OLDPWD);
 		arr = tokenize_string(oldPWD_cpy, "=");
 
