@@ -2,7 +2,7 @@
 int Exit_fun(char *cmd, char **args, int *status);
 int positive_parseInt(char *str);
 int update_OLDPWD();
-void println_strn(char *str, int n);
+void print_strn(char *str, int n);
 char *app_name;
 int counter = 1;
 /**
@@ -132,7 +132,17 @@ int builtIns(char *cmd, char **args, int *status)
 
 			if (OLDPWD == NULL)
 			{
-				println_strn(_getnEnv("PWD", 3), 5);
+				char *PWD_cpy = malloc(strlen(PWD) + 2 * sizeof(char));
+
+				strcpy(PWD_cpy, PWD);
+
+				if (!PWD_cpy)
+					return (1);
+
+				strcat(PWD_cpy, "\n");
+				print_strn(PWD_cpy, 4);
+
+				free(PWD_cpy);
 				return (1);
 			}
 
@@ -254,12 +264,10 @@ int update_OLDPWD(char *old_pwd_path)
 
 	return 0;
 }
-void println_strn(char *str, int n)
+void print_strn(char *str, int n)
 {
 	size_t i;
 
 	for (i = n; i < strlen(str); i++)
 		putchar(str[i]);
-
-	putchar('\n');
 }
