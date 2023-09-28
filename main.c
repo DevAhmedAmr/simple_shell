@@ -1,5 +1,4 @@
 #include "main.h"
-
 /**
  * main - a entry point to a program that mimics the shell code
  * interpreter
@@ -10,13 +9,16 @@
  *
  * Return: (0) if success or a error number status
  */
+
 int main(int argc, char **argv)
 {
 	char *cmd = NULL, **args = NULL;
 	int interActive = isatty(STDIN_FILENO), status = 0;
 
+	counter = 1;
 	app_name = argv[0];
 	(void)argc;
+
 	if (!interActive)
 	{
 		status = non_interactive(&cmd, &args);
