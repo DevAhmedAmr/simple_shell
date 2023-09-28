@@ -98,24 +98,19 @@ int builtIns(char *cmd, char **args, int *status)
 		char *oldPWD_cpy;
 		char *PWD = (_getnEnv("PWD", 3));
 		char **arr;
-		char *OLDPWD = (_getEnv("OLDPWD"));
 
-		if (OLDPWD == NULL || PWD == NULL)
+		if (PWD == NULL)
 			return (1);
-
-		oldPWD_cpy = strdup(OLDPWD);
-		arr = tokenize_string(oldPWD_cpy, "=");
 
 		if (args[1] == NULL)
 		{
 			char *home_dir = _getnEnv("HOME", 4);
-			char *home_dir_cpy;
-			char **home_dir_arr;
+			char *home_dir_cpy = NULL;
+			char **home_dir_arr = NULL;
 
 			if (home_dir == NULL)
 			{
 				free_double_arr(&arr);
-				free(oldPWD_cpy);
 				return (1);
 			}
 
@@ -131,15 +126,19 @@ int builtIns(char *cmd, char **args, int *status)
 
 			free(home_dir_cpy);
 			free_double_arr(&home_dir_arr);
-			free_double_arr(&arr);
-			free(oldPWD_cpy);
 			return (1);
 		}
 
 		if (!strcmp("-", args[1]) || !strcmp("-\n", args[1]))
 		{
+			char *OLDPWD = (_getEnv("OLDPWD"));
 
-			/*is_malloc_failed(PWD_arr);*/
+			if (OLDPWD == NULL)
+				return (1);
+
+			oldPWD_cpy = strdup(OLDPWD);
+			arr = tokenize_string(oldPWD_cpy, "=");
+
 			printf("%s\n", arr[1]);
 
 			update_OLDPWD(PWD);
@@ -153,8 +152,6 @@ int builtIns(char *cmd, char **args, int *status)
 		update_OLDPWD(PWD);
 		change_dir(args[1]);
 
-		free(oldPWD_cpy);
-		free_double_arr(&arr);
 		return (1);
 	}
 	return (0);
