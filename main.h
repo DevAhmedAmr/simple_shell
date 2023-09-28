@@ -55,4 +55,5 @@ int handling_NULL_OLDPWD(char *PWD);
 int cd_to_OLDPWD(char *PWD);
 int cd_Home_path(char *PWD);
 int cd(char **args);
+int update_OLDPWD(char *old_pwd_path);
 #endif
