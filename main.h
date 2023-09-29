@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 char *app_name;
 int counter;
+char **alias;
 #define FREE_2D_ARGS_AND_CMD    \
 	{                           \
 		free_double_arr(&args); \

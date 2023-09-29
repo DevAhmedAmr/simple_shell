@@ -9,7 +9,8 @@
  *
  * Return: (0) if success or a error number status
  */
-
+int initialize_Alias();
+int add_alias(char *cmd);
 int main(int argc, char **argv)
 {
 	char *cmd = NULL, **args = NULL;
@@ -18,11 +19,13 @@ int main(int argc, char **argv)
 	counter = 1;
 	app_name = argv[0];
 	(void)argc;
+	initialize_Alias();
 
 	if (!interActive)
 	{
 		status = non_interactive(&cmd, &args);
 		free(cmd);
+		free_double_arr(&alias);
 		return (status);
 	}
 	else
@@ -36,6 +39,7 @@ int main(int argc, char **argv)
 				write(STDIN_FILENO, "\n", 1);
 
 				FREE_ARGS_AND_CMD;
+				free_double_arr(&alias);
 				exit(status);
 			}
 
@@ -52,6 +56,7 @@ int main(int argc, char **argv)
 			FREE_2D_ARGS_AND_CMD;
 			counter++;
 		}
+	free_double_arr(&alias);
 	return (status);
 }
 
@@ -93,6 +98,14 @@ int builtIns(char *cmd, char **args, int *status)
 	{
 		return cd(args);
 	}
+	else if (!strcmp("alias", args[0]))
+	{
+		add_alias(args[1]);
+		print_2d_arr(alias);
+
+		return 1;
+	}
+
 	return (0);
 }
 
@@ -118,6 +131,8 @@ int Exit_fun(char *cmd, char **args, int *status)
 	{
 		free(cmd);
 		free_double_arr(&args);
+		free_double_arr(&alias);
+
 		exit(*status);
 	}
 
@@ -125,6 +140,8 @@ int Exit_fun(char *cmd, char **args, int *status)
 	{
 		free(cmd);
 		free_double_arr(&args);
+		free_double_arr(&alias);
+
 		exit(custom_exit_status);
 	}
 	else if (isExit && args[1] != NULL)
@@ -171,4 +188,34 @@ int positive_parseInt(char *str)
 		i++;
 	}
 	return (result);
+}
+
+int initialize_Alias()
+{
+	alias = malloc(100 * sizeof(char));
+
+	if (alias == NULL)
+		return -1;
+
+	alias[0] = NULL;
+
+	return 0;
+}
+int add_alias(char *cmd)
+{
+	char *cmd_cpy = strdup(cmd);
+	int i = 0;
+
+	if (cmd == NULL)
+		return -1;
+
+	for (; alias[i] != NULL; i++)
+		;
+
+	if (alias[i] == NULL)
+	{
+		alias[i] = cmd_cpy;
+		alias[i + 1] = NULL;
+	}
+	return 1;
 }
