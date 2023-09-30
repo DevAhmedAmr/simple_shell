@@ -1,4 +1,4 @@
-alias ahmed=ah
-alias ah=/bin/ls
-ahmed
+alias alias1=/bin/ls
+alias alias2=/bin/echo
+alias alias3=/bin/pwd
 alias

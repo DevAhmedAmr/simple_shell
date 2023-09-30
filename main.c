@@ -115,10 +115,10 @@ int builtIns(char *cmd, char **args, int *status)
 			print_2d_arr(alias);
 			return 1;
 		}
-
-		for (i = 0; i < double_arr_len(args); i++)
+		else if (strchr(cmd, '='))
 		{
-			add_alias(args[i]);
+			for (i = 0; i < double_arr_len(args); i++)
+				add_alias(args[i]);
 		}
 
 		return 1;
