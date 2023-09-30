@@ -108,17 +108,34 @@ int builtIns(char *cmd, char **args, int *status)
 	}
 	else if (!strncmp("alias", cmd, 5))
 	{
-		int i;
+		int i, j, alias_exist = 0;
 
 		if (args[1] == NULL)
 		{
 			print_2d_arr(alias);
 			return 1;
 		}
-		else if (strchr(cmd, '='))
+
+		for (i = 0; i < double_arr_len(args); i++)
 		{
-			for (i = 0; i < double_arr_len(args); i++)
-				add_alias(args[i]);
+			for (j = 0; j < double_arr_len(alias); j++)
+			{
+
+				if (strlen(args[i]) == keylen(alias[j]) &&
+					!strncmp(alias[j], args[i], keylen(alias[j])))
+				{
+					printf("%s\n", alias[j]);
+
+					alias_exist = 1;
+				}
+			}
+			if (alias_exist == 1)
+			{
+				alias_exist = 0;
+				continue;
+			}
+
+			add_alias(args[i]);
 		}
 
 		return 1;
