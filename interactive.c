@@ -23,6 +23,11 @@ int interactive_mode(char **cmd, char ***args)
 	/*exit(0);*/
 	/*}*/
 
+	/*remove the newline from the cmd*/
+	(*cmd)[strlen(*cmd) - 1] = '\0';
+
+	*cmd = is_alias(*cmd);
+
 	/*free the old args value before reassigning it*/
 	free(*args);
 	*args = tokenize_string(*cmd, " \n");

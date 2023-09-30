@@ -1,4 +1,11 @@
 #include "main.h"
+char *app_name;
+int counter;
+char **alias;
+char *add_single_quotations_at(size_t pos, char *cmd_cpy);
+char *add_quotations(char *cmd);
+char *is_alias(char *cmd);
+int _strnlen(char *str1, char *str2, int n);
 /**
  * main - a entry point to a program that mimics the shell code
  * interpreter
@@ -9,6 +16,7 @@
  *
  * Return: (0) if success or a error number status
  */
+
 int initialize_Alias();
 int add_alias(char *cmd);
 int main(int argc, char **argv)
@@ -34,6 +42,7 @@ int main(int argc, char **argv)
 
 			write(STDIN_FILENO, "$ ", 2);
 			args = malloc(sizeof(char *) * 50);
+
 			if (interactive_mode(&cmd, &args) == EOF)
 			{
 				write(STDIN_FILENO, "\n", 1);
@@ -98,10 +107,17 @@ int builtIns(char *cmd, char **args, int *status)
 	{
 		return cd(args);
 	}
-	else if (!strcmp("alias", args[0]))
+	else if (!strncmp("alias", cmd, 5))
 	{
-		add_alias(args[1]);
-		print_2d_arr(alias);
+		int i;
+
+		if (args[1] == NULL)
+		{
+			print_2d_arr(alias);
+			return 1;
+		}
+		for (i = 0; i < double_arr_len(args); i++)
+			add_alias(args[i]);
 
 		return 1;
 	}
@@ -189,33 +205,43 @@ int positive_parseInt(char *str)
 	}
 	return (result);
 }
-
-int initialize_Alias()
+char *is_alias(char *cmd)
 {
-	alias = malloc(100 * sizeof(char));
+	size_t k = 0, i;
 
-	if (alias == NULL)
-		return -1;
-
-	alias[0] = NULL;
-
-	return 0;
-}
-int add_alias(char *cmd)
-{
-	char *cmd_cpy = strdup(cmd);
-	int i = 0;
-
-	if (cmd == NULL)
-		return -1;
-
-	for (; alias[i] != NULL; i++)
-		;
-
-	if (alias[i] == NULL)
+	for (i = 0; alias[i]; i++)
 	{
-		alias[i] = cmd_cpy;
-		alias[i + 1] = NULL;
+		size_t key_len = keylen(alias[i]), j = 0;
+
+		if (key_len == (strlen(cmd)) &&
+			!strncmp(cmd, alias[i], key_len))
+		{
+
+			char *alias_cpy = strdup(alias[i]);
+			char **arr = tokenize_string(alias_cpy, "=");
+
+			if (!arr)
+				return NULL;
+
+			cmd = realloc(cmd, sizeof(char) * strlen(arr[1]) + 1);
+
+			if (!cmd)
+				return NULL;
+
+			for (; arr[1][j] != '\0'; j++)
+			{
+				if (arr[1][j] != '\'')
+				{
+					cmd[k] = arr[1][j];
+					k++;
+				}
+			}
+			cmd[k] = '\0';
+
+			free(alias_cpy);
+			free_double_arr(&arr);
+			return cmd;
+		}
 	}
-	return 1;
+	return cmd;
 }

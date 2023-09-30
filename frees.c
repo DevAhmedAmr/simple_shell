@@ -1,5 +1,4 @@
 #include "main.h"
-#include "main.h"
 /**
  * free_double_arr - free double arr
  * @args: double array

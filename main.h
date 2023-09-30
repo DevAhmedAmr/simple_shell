@@ -1,13 +1,16 @@
 #ifndef MAIN_H
 #define MAIN_H
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/wait.h>
-char *app_name;
-int counter;
-char **alias;
+
+extern char *app_name;
+extern int counter;
+extern char **alias;
+
 #define FREE_2D_ARGS_AND_CMD    \
 	{                           \
 		free_double_arr(&args); \
@@ -29,6 +32,10 @@ char **alias;
 	}
 
 extern char **environ;
+int add_alias(char *cmd);
+int initialize_Alias();
+char *add_single_quotations_at(size_t pos, char *cmd);
+char *add_quotations(char *cmd);
 int interactive_mode(char **cmd, char ***args);
 char *_getEnv(char *path);
 void free_double_arr(char ***args);
@@ -57,4 +64,7 @@ int cd_to_OLDPWD(char *PWD);
 int cd_Home_path(char *PWD);
 int cd(char **args);
 int update_OLDPWD(char *old_pwd_path);
+int initialize_Alias();
+size_t keylen(char *key);
+char *is_alias(char *cmd);
 #endif
