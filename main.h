@@ -66,5 +66,5 @@ int cd(char **args);
 int update_OLDPWD(char *old_pwd_path);
 int initialize_Alias();
 size_t keylen(char *key);
-char *is_alias(char *cmd);
+int is_alias(char **cmd);
 #endif

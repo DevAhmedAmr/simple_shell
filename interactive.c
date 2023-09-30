@@ -26,7 +26,8 @@ int interactive_mode(char **cmd, char ***args)
 	/*remove the newline from the cmd*/
 	(*cmd)[strlen(*cmd) - 1] = '\0';
 
-	*cmd = is_alias(*cmd);
+	while (is_alias(cmd))
+		;
 
 	/*free the old args value before reassigning it*/
 	free(*args);

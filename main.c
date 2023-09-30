@@ -4,7 +4,6 @@ int counter;
 char **alias;
 char *add_single_quotations_at(size_t pos, char *cmd_cpy);
 char *add_quotations(char *cmd);
-char *is_alias(char *cmd);
 int _strnlen(char *str1, char *str2, int n);
 /**
  * main - a entry point to a program that mimics the shell code
@@ -205,7 +204,7 @@ int positive_parseInt(char *str)
 	}
 	return (result);
 }
-char *is_alias(char *cmd)
+int is_alias(char **cmd)
 {
 	size_t k = 0, i;
 
@@ -213,35 +212,35 @@ char *is_alias(char *cmd)
 	{
 		size_t key_len = keylen(alias[i]), j = 0;
 
-		if (key_len == (strlen(cmd)) &&
-			!strncmp(cmd, alias[i], key_len))
+		if (key_len == (strlen(*cmd)) &&
+			!strncmp(*cmd, alias[i], key_len))
 		{
 
 			char *alias_cpy = strdup(alias[i]);
 			char **arr = tokenize_string(alias_cpy, "=");
 
 			if (!arr)
-				return NULL;
+				return 1;
 
-			cmd = realloc(cmd, sizeof(char) * strlen(arr[1]) + 1);
+			*cmd = realloc(*cmd, sizeof(char) * strlen(arr[1]) + 1);
 
-			if (!cmd)
-				return NULL;
+			if (!*cmd)
+				return 1;
 
 			for (; arr[1][j] != '\0'; j++)
 			{
 				if (arr[1][j] != '\'')
 				{
-					cmd[k] = arr[1][j];
+					(*cmd)[k] = arr[1][j];
 					k++;
 				}
 			}
-			cmd[k] = '\0';
+			(*cmd)[k] = '\0';
 
 			free(alias_cpy);
 			free_double_arr(&arr);
-			return cmd;
+			return (1);
 		}
 	}
-	return cmd;
+	return (0);
 }

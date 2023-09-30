@@ -28,7 +28,8 @@ int non_interactive(char **cmd, char ***args)
 		if ((*cmd)[strlen(*cmd) - 1] == '\n')
 			(*cmd)[strlen(*cmd) - 1] = '\0';
 
-		*cmd = is_alias(*cmd);
+		while (is_alias(cmd))
+			;
 
 		*args = tokenize_string(*cmd, " \n");
 
