@@ -23,6 +23,13 @@ int non_interactive(char **cmd, char ***args)
 		/*exit(2);*/
 		/*	exit(status);*/
 		/*	}*/
+		/*remove the newline from the cmd*/
+
+		if ((*cmd)[strlen(*cmd) - 1] == '\n')
+			(*cmd)[strlen(*cmd) - 1] = '\0';
+
+		*cmd = is_alias(*cmd);
+
 		*args = tokenize_string(*cmd, " \n");
 
 		builtIns_status = builtIns(*cmd, *args, &status);
