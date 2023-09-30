@@ -17,12 +17,6 @@ int non_interactive(char **cmd, char ***args)
 	while ((read = getline(cmd, &size, stdin)) != -1)
 	{
 
-		/*if (!strcmp(*cmd, "exit\n") || !strcmp(*cmd, "exit"))*/
-		/*{*/
-		/*if (status == 2)*/
-		/*exit(2);*/
-		/*	exit(status);*/
-		/*	}*/
 		/*remove the newline from the cmd*/
 
 		if ((*cmd)[strlen(*cmd) - 1] == '\n')

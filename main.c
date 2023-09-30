@@ -18,6 +18,7 @@ int _strnlen(char *str1, char *str2, int n);
 
 int initialize_Alias();
 int add_alias(char *cmd);
+
 int main(int argc, char **argv)
 {
 	char *cmd = NULL, **args = NULL;
@@ -115,6 +116,7 @@ int builtIns(char *cmd, char **args, int *status)
 			print_2d_arr(alias);
 			return 1;
 		}
+
 		for (i = 0; i < double_arr_len(args); i++)
 			add_alias(args[i]);
 
@@ -220,12 +222,12 @@ int is_alias(char **cmd)
 			char **arr = tokenize_string(alias_cpy, "=");
 
 			if (!arr)
-				return 1;
+				return (1);
 
 			*cmd = realloc(*cmd, sizeof(char) * strlen(arr[1]) + 1);
 
 			if (!*cmd)
-				return 1;
+				return (1);
 
 			for (; arr[1][j] != '\0'; j++)
 			{
