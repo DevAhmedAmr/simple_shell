@@ -1,4 +1,2 @@
-alias ahmed=/bin/ls
-alias ah=ahmed
-alias exit=ah
-pwd
+alias ls_alias=/bin/ls
+alias

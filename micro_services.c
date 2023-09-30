@@ -53,7 +53,7 @@ void print_2d_arr(char **args)
 	size_t j;
 
 	for (j = 0; args[j] != NULL; j++)
-		printf("'%s'\n", args[j]);
+		printf("%s\n", args[j]);
 }
 
 /**
