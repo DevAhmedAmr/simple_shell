@@ -1,2 +1,4 @@
-alias ls_alias=/bin/ls
+alias ahmed=ah
+alias ah=/bin/ls
+ahmed
 alias

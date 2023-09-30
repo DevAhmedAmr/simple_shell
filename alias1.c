@@ -29,7 +29,8 @@ int add_alias(char *cmd)
 
 	for (; alias[i] != NULL; i++)
 	{
-		if (key_length == strlen(cmd_cpy) &&
+
+		if (key_length == keylen(alias[i]) &&
 			!strncmp(alias[i], cmd_cpy, key_length))
 		{
 			free(alias[i]);

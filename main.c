@@ -18,7 +18,6 @@ int _strnlen(char *str1, char *str2, int n);
 
 int initialize_Alias();
 int add_alias(char *cmd);
-
 int main(int argc, char **argv)
 {
 	char *cmd = NULL, **args = NULL;
@@ -118,7 +117,9 @@ int builtIns(char *cmd, char **args, int *status)
 		}
 
 		for (i = 0; i < double_arr_len(args); i++)
+		{
 			add_alias(args[i]);
+		}
 
 		return 1;
 	}
